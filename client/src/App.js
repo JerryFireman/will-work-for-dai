@@ -42,10 +42,12 @@ class App extends Component {
     await contract.methods.set(35).send({ from: accounts[0] });
 
     // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
+     const project = await contract.methods.readProject().call()
+
+     console.log(project.name)
 
     // Update state with the result.
-    this.setState({ storageValue: response });
+    this.setState({ storageValue: project.name });
   };
 
   render() {
@@ -64,7 +66,7 @@ class App extends Component {
         <p>
           Try changing the value stored on <strong>line 40</strong> of App.js.
         </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <div>The project name is: {this.state.storageValue}</div>
       </div>
     );
   }

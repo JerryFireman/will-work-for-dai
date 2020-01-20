@@ -1,8 +1,49 @@
-import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
-import getWeb3 from "./getWeb3";
+import React from "react";
+//import SimpleStorageContract from "./contracts/SimpleStorage.json";
+//import getWeb3 from "./getWeb3";
 
 import "./App.css";
+
+
+function App() {
+  function handleChange(evt) {
+    const value = evt.target.value;
+    setState({
+      ...state,
+      [evt.target.name]: value
+    });
+    console.log(evt.target.name + ": " + value)
+  }
+
+  const [state, setState] = React.useState({
+    firstName: "",
+    lastName: ""
+  })
+  return (
+    <form>
+      <label>
+        First name
+        <input
+          type="text"
+          name="firstName"
+          value={state.firstName}
+          onChange={handleChange}
+        />
+      </label>
+      <label>
+        Last name
+        <input
+          type="text"
+          name="lastName"
+          value={state.lastName}
+          onChange={handleChange}
+        />
+      </label>
+    </form>
+  );
+}
+
+/*
 
 function handleChange(evt) {
   console.log("new value", evt.target.value);
@@ -42,6 +83,7 @@ class App extends Component {
   };
 
 
+  /*
   runExample = async () => {
     const { accounts, contract } = this.state;
 
@@ -56,11 +98,6 @@ class App extends Component {
     // Update state with the result.
     this.setState({ storageValue: project.name });
   };
-
-  handleChange = async (evt) => {
-    console.log("new value", evt.target.value);
- }
-
 
   render() {
     if (!this.state.web3) {
@@ -90,5 +127,6 @@ class App extends Component {
     );
   }
 }
+*/
 
 export default App;

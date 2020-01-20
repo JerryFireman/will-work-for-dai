@@ -1,59 +1,18 @@
-import React from "react";
-//import SimpleStorageContract from "./contracts/SimpleStorage.json";
-//import getWeb3 from "./getWeb3";
+import React, { Component } from "react";
+import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import getWeb3 from "./getWeb3";
 
 import "./App.css";
 
-
-function App() {
-  function handleChange(evt) {
-    const value = evt.target.value;
-    setState({
-      ...state,
-      [evt.target.name]: value
-    });
-    console.log(evt.target.name + ": " + value)
-  }
-
-  const [state, setState] = React.useState({
-    firstName: "",
-    lastName: ""
-  })
-  return (
-    <form>
-      <label>
-        First name
-        <input
-          type="text"
-          name="firstName"
-          value={state.firstName}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Last name
-        <input
-          type="text"
-          name="lastName"
-          value={state.lastName}
-          onChange={handleChange}
-        />
-      </label>
-    </form>
-  );
-}
-
-/*
-
-function handleChange(evt) {
-  console.log("new value", evt.target.value);
-}
-
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
-
-
+  constructor(props) {
+    super(props)
+    this.setValue = this.setValue.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
   
+  state = { storageValue: 0, web3: null, accounts: null, contract: null, value: 0 };
+
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
@@ -70,9 +29,13 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address,
       );
 
+//        instance.events.LogSet((error, event)=>{
+//          console.log(event)
+//        })
+
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      this.setState({ web3, accounts, contract: instance });
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -82,22 +45,25 @@ class App extends Component {
     }
   };
 
-
-  /*
-  runExample = async () => {
+  setValue = async (event) => {
+    event.preventDefault()
+    
     const { accounts, contract } = this.state;
 
     // Stores a given value, 5 by default.
-    await contract.methods.set(35).send({ from: accounts[0] });
+    await contract.methods.set(this.state.value).send({ from: accounts[0] });
 
     // Get the value from the contract to prove it worked.
-     const project = await contract.methods.readProject().call()
-
-     console.log(project.name)
+    const response = await contract.methods.get().call();
 
     // Update state with the result.
-    this.setState({ storageValue: project.name });
+    this.setState({ storageValue: response });
   };
+
+  handleChange = async (e) => {
+    //e.preventDefault()
+    this.setState({value: parseInt(e.target.value, 10)})
+  }
 
   render() {
     if (!this.state.web3) {
@@ -107,7 +73,7 @@ class App extends Component {
       <div className="App">
         <h1>Good to Go!</h1>
         <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
+        <h2>Smart Contract Example</h2> 
         <p>
           If your contracts compiled and migrated successfully, below will show
           a stored value of 5 (by default).
@@ -115,18 +81,19 @@ class App extends Component {
         <p>
           Try changing the value stored on <strong>line 40</strong> of App.js.
         </p>
-        <div>The project name is: {this.state.storageValue}</div>
+        <form>
         <label>
-          First name
-          <input
-            type="text"
-            onChange={handleChange}
-          />
+          Name:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
         </label>
+        <button value="Submit" onClick={this.setValue} >Submit </button>
+        </form>
+
+        
+        <div>The stored value is: {this.state.storageValue}</div>
       </div>
     );
   }
 }
-*/
 
 export default App;

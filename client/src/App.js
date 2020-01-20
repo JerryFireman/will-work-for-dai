@@ -4,9 +4,15 @@ import getWeb3 from "./getWeb3";
 
 import "./App.css";
 
+function handleChange(evt) {
+  console.log("new value", evt.target.value);
+}
+
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
 
+
+  
   componentDidMount = async () => {
     try {
       // Get network provider and web3 instance.
@@ -35,6 +41,7 @@ class App extends Component {
     }
   };
 
+
   runExample = async () => {
     const { accounts, contract } = this.state;
 
@@ -49,6 +56,11 @@ class App extends Component {
     // Update state with the result.
     this.setState({ storageValue: project.name });
   };
+
+  handleChange = async (evt) => {
+    console.log("new value", evt.target.value);
+ }
+
 
   render() {
     if (!this.state.web3) {
@@ -67,6 +79,13 @@ class App extends Component {
           Try changing the value stored on <strong>line 40</strong> of App.js.
         </p>
         <div>The project name is: {this.state.storageValue}</div>
+        <label>
+          First name
+          <input
+            type="text"
+            onChange={handleChange}
+          />
+        </label>
       </div>
     );
   }

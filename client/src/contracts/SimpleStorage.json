@@ -22059,10 +22059,16 @@
       "links": {},
       "address": "0x02D5DE198b3718D0FE709209cf1d5D7992e71E96",
       "transactionHash": "0x3f81a38e94b32660634ea4b96869bf0e6e79e21b6df6b420e8900c8c8df28283"
+    },
+    "1579477072900": {
+      "events": {},
+      "links": {},
+      "address": "0xfe9e0A40fB26c2758022e1B1C77791E944F7deCf",
+      "transactionHash": "0xea6529c8b80e8f09fcba4fcb6d053a07c14a53b95c816022fca511a484c0ab18"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2020-01-17T15:37:18.577Z",
+  "updatedAt": "2020-01-19T23:38:04.492Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

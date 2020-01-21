@@ -45,8 +45,8 @@ class App extends Component {
       this.setState({ web3, accounts, contract: instance });
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
-      this.setState({projectName: project.name, projectDescription: project.description })
-
+      this.setState({projectName: project.name, projectDescription: project.description })  
+      this.getPhaseStructure()
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -65,13 +65,18 @@ class App extends Component {
     // Defines a new phase of the project
     await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, this.state.initialPayment, this.state.finalPayment).send({ from: accounts[0], gas: 3000000 });
 
-    // Read project to determine the number of the latest phase.
-  
-    // Create array with information on all existing phases
-
   };
 
 
+  //Executed to retrieve the current phase structure 
+  getPhaseStructure = async () => {
+    const { contract } = this.state;
+    const idGenerator = await contract.methods.idGenerator().call();
+    console.log(idGenerator)
+    const phase = await contract.methods.readPhase(1).call();
+    console.log(phase.name)
+  } 
+  
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
     console.log(event.target.name + ": " + event.target.value);

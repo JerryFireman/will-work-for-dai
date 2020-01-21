@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-
 import "./App.css";
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.setValue = this.setValue.bind(this)
+    this.definePhase = this.definePhase.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
   
@@ -15,6 +14,8 @@ class App extends Component {
     web3: null,
     accounts: null,
     contract: null,
+    projectName: "",
+    projectDescription: "",
     storageValue: 0,
     phaseName: "",
     phaseDescription: "",
@@ -38,9 +39,12 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address,
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
+      // Set web3, accounts, and contract to the state.
       this.setState({ web3, accounts, contract: instance });
+      // Call readProject() to obtain project information and add to state
+      const project = await instance.methods.readProject().call();
+      this.setState({projectName: project.name, projectDescription: project.description })
+
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -50,7 +54,8 @@ class App extends Component {
     }
   };
 
-  setValue = async (event) => {
+  //Executed to define a new phase of the project
+  definePhase = async (event) => {
     console.log("Submit: " + this.state.phaseName)
     event.preventDefault()
   };
@@ -66,22 +71,33 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Define new phase</h2> 
-        <p>
-          Enter parameters below and press submit to define new phase 
-       </p>
+        <h1>SimpleAgreement</h1>
+        <div>Harnessing the blockchain to easily create smart contracts for service providers</div>
+        <h2>{this.state.projectName}</h2> 
+          <p>
+            {this.state.projectDescription}
+          </p>
+          <p>
+            Enter parameters below and press submit to define new phase 
+          </p>
         <form>
+          <div>
           <label>
             Phase name:
             <input type="text" name="phaseName" onChange={this.handleChange} />            
           </label>
-        <button value="Submit" onClick={this.setValue} >Submit </button>
-        </form>
+          </div>
+          <div>
+          <label>
+            Phase description:
+            <input type="text" name="phaseDescription" onChange={this.handleChange} />            
+          </label>
+          </div>
+          <div>
+        <button onClick={this.definePhase} >Define new phase </button>
 
-        
-        <div>The stored value is: {this.state.storageValue}</div>
+          </div>
+        </form>
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import Table from "./Table.js"
 import getWeb3 from "./getWeb3";
 import "./App.css";
 
@@ -20,7 +21,8 @@ class App extends Component {
     phaseName: "",
     phaseDescription: "",
     initialPayment: 0,
-    finalPayment: 0
+    finalPayment: 0,
+    phaseStructure: []
   };
 
   componentDidMount = async () => {
@@ -87,6 +89,11 @@ class App extends Component {
           <p>
             {this.state.projectDescription}
           </p>
+          <div>
+            <h1 id='title'>Current Phase Structure</h1>
+            <Table />
+         </div>
+
           <p>
             Enter parameters and press button below to define new phase 
           </p>

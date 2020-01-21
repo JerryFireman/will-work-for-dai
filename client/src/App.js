@@ -72,12 +72,23 @@ class App extends Component {
   getPhaseStructure = async () => {
     const { contract } = this.state;
     const idGenerator = await contract.methods.idGenerator().call();
+    var phaseArray = [];
     if (idGenerator >= 2) {
       for (let i = 1; i < idGenerator; i++) {
-        const phase = await contract.methods.readPhase(1).call();
-        console.log(phase)
+        var phase = await contract.methods.readPhase(i).call();
+        delete phase[0];
+        delete phase[1];
+        delete phase[2];
+        delete phase[3];
+        delete phase[4];
+        delete phase[5];
+        phaseArray.push(phase);
       }
     }
+    console.log(phaseArray)
+    this.setState({ phaseStructure: phaseArray });
+    console.log(this.state.phaseStructure)
+    
   } 
   
   handleChange (event) {

@@ -72,9 +72,12 @@ class App extends Component {
   getPhaseStructure = async () => {
     const { contract } = this.state;
     const idGenerator = await contract.methods.idGenerator().call();
-    console.log(idGenerator)
-    const phase = await contract.methods.readPhase(1).call();
-    console.log(phase.name)
+    if (idGenerator >= 2) {
+      for (let i = 1; i < idGenerator; i++) {
+        const phase = await contract.methods.readPhase(1).call();
+        console.log(phase)
+      }
+    }
   } 
   
   handleChange (event) {

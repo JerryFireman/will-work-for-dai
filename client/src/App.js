@@ -56,9 +56,19 @@ class App extends Component {
 
   //Executed to define a new phase of the project
   definePhase = async (event) => {
-    console.log("Submit: " + this.state.phaseName)
     event.preventDefault()
+    
+    const { accounts, contract } = this.state;
+
+    // Defines a new phase of the project
+    await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, this.state.initialPayment, this.state.finalPayment).send({ from: accounts[0], gas: 3000000 });
+
+    // Read project to determine the number of the latest phase.
+  
+    // Create array with information on all existing phases
+
   };
+
 
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -78,24 +88,35 @@ class App extends Component {
             {this.state.projectDescription}
           </p>
           <p>
-            Enter parameters below and press submit to define new phase 
+            Enter parameters and press button below to define new phase 
           </p>
         <form>
           <div>
-          <label>
-            Phase name:
-            <input type="text" name="phaseName" onChange={this.handleChange} />            
-          </label>
+            <label>
+              Phase name:
+              <input type="text" name="phaseName" onChange={this.handleChange} />            
+            </label>
           </div>
           <div>
-          <label>
-            Phase description:
-            <input type="text" name="phaseDescription" onChange={this.handleChange} />            
-          </label>
+            <label>
+              Phase description:
+              <input type="text" name="phaseDescription" onChange={this.handleChange} />            
+            </label>
           </div>
           <div>
-        <button onClick={this.definePhase} >Define new phase </button>
-
+            <label>
+              Initial payment:
+              <input type="number" name="initialPayment" onChange={this.handleChange} />            
+            </label>
+          </div>
+          <div>
+            <label>
+              Final payment:
+              <input type="number" name="finalPayment" onChange={this.handleChange} />            
+            </label>
+          </div>
+          <div>
+            <button onClick={this.definePhase} >Define new phase </button>
           </div>
         </form>
       </div>

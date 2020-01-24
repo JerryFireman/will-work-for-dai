@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-import Header from "./Header.js"
-import ProjectInfo from "./ProjectInfo.js"
+import Header from "./Header.js";
+import ProjectInfo from "./ProjectInfo.js";
+import PhaseStructure from "./PhaseStructure.js"
 import "./App.css";
 
 
@@ -26,7 +27,8 @@ class App extends Component {
     phaseDescription: "",
     initialPayment: 0,
     finalPayment: 0,
-    phaseStructure: []
+    phaseStructure: [],
+    project: {}
   };
 
   componentDidMount = async () => {
@@ -49,6 +51,7 @@ class App extends Component {
       this.setState({ web3, accounts, contract: instance });
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
+      this.setState({project: project})
       console.log(project)
       this.setState({projectName: project.name, projectDescription: project.description })  
       this.state.phaseStructure = this.getPhaseStructure()
@@ -137,22 +140,8 @@ class App extends Component {
     return (
       <div className="App">
         <Header/>
-        <ProjectInfo/>
-        <h2>{this.state.projectName}</h2> 
-          <p>
-            {this.state.projectDescription}
-          </p>
-          <div>
-            <h1 id='title'>Current Phase Structure</h1>
-          </div>
-          <div>
-            <table id='phaseStructure'>
-               <tbody>
-                  {this.renderTableData()}
-               </tbody>
-            </table>
-            </div>
-
+        <ProjectInfo project={this.state.project}/>
+        <PhaseStructure project={this.state.project}/>
           <p>
             Enter parameters and press button below to define new phase 
           </p>

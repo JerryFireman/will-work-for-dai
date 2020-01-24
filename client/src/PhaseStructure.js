@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 
-
-
-
-class Table extends Component {
+class PhaseStructure extends Component {
    constructor(props) {
       super(props)
       this.state = {
@@ -40,7 +37,7 @@ class Table extends Component {
    render() {
       return (
          <div>
-            <h1 id='title'>React Dynamic Table</h1>
+            <h2>{this.props.project.name}'s phase structure</h2>
             <table id='students'>
                <tbody>
                   <tr>{this.renderTableHeader()}</tr>
@@ -52,35 +49,5 @@ class Table extends Component {
    }
 }
 
-export default Table 
+export default PhaseStructure 
 
-renderTableHeader() {
-   let header = Object.keys(this.state.phaseStructure[0])
-   return header.map((key, index) => {
-      return <th key={index}>{key.toUpperCase()}</th>
-   })
-}
-
-renderTableData() {
-   return this.state.phaseStructure.map((phase, index) => {
-      const { name, description, initialPayment, finalPayment, phaseStarted, phaseApproved } = phase //destructuring
-      return (
-         <tr key={name}>
-            <td>{name}</td>
-            <td>{description}</td>
-            <td>{initialPayment}</td>
-            <td>{finalPayment}</td>
-            <td>{phaseStarted}</td>
-            <td>{phaseApproved}</td>
-         </tr>
-      )
-   })
-}
-            <div>
-            <table id='phaseStructure'>
-               <tbody>
-                  <tr>{this.renderTableHeader()}</tr>
-                  {this.renderTableData()}
-               </tbody>
-            </table>
-            </div>

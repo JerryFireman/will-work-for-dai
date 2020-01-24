@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
-import Table from "./Table.js"
 import getWeb3 from "./getWeb3";
+import Header from "./Header.js"
+import ProjectInfo from "./ProjectInfo.js"
 import "./App.css";
+
+
+
 
 class App extends Component {
   constructor(props) {
@@ -45,8 +49,9 @@ class App extends Component {
       this.setState({ web3, accounts, contract: instance });
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
+      console.log(project)
       this.setState({projectName: project.name, projectDescription: project.description })  
-      this.getPhaseStructure()
+      this.state.phaseStructure = this.getPhaseStructure()
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -67,7 +72,6 @@ class App extends Component {
 
   };
 
-
   //Executed to retrieve the current phase structure 
   getPhaseStructure = async () => {
     const { contract } = this.state;
@@ -82,14 +86,44 @@ class App extends Component {
         delete phase[3];
         delete phase[4];
         delete phase[5];
+        phase.id = i
         phaseArray.push(phase);
       }
     }
-    console.log(phaseArray)
-    this.setState({ phaseStructure: phaseArray });
+    this.state.phaseStructure = phaseArray
     console.log(this.state.phaseStructure)
-    
-  } 
+    return phaseArray
+   } 
+
+   /*
+   renderTableHeader() {
+    let header = Object.keys(this.state.phaseStructure[0])
+    return header.map((key, index) => {
+       return <th key={index}>{key.toUpperCase()}</th>
+    })
+ }
+ */
+ 
+ renderTableData() {
+    return this.state.phaseStructure.map((phase, index) => {
+       const { name, description, initialPayment, finalPayment, phaseStarted, phaseApproved, id } = phase //destructuring
+       return (
+          <tr key={id}>
+             <td>{name}</td>
+             <td>{description}</td>
+             <td>{initialPayment}</td>
+             <td>{finalPayment}</td>
+             <td>{phaseStarted}</td>
+             <td>{phaseApproved}</td>
+          </tr>
+       )
+    })
+ }
+
+
+
+
+
   
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -102,16 +136,22 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>SimpleAgreement</h1>
-        <div>Harnessing the blockchain to easily create smart contracts for service providers</div>
+        <Header/>
+        <ProjectInfo/>
         <h2>{this.state.projectName}</h2> 
           <p>
             {this.state.projectDescription}
           </p>
           <div>
             <h1 id='title'>Current Phase Structure</h1>
-            <Table />
-         </div>
+          </div>
+          <div>
+            <table id='phaseStructure'>
+               <tbody>
+                  {this.renderTableData()}
+               </tbody>
+            </table>
+            </div>
 
           <p>
             Enter parameters and press button below to define new phase 
@@ -149,5 +189,6 @@ class App extends Component {
     );
   }
 }
+
 
 export default App;

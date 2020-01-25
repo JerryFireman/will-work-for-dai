@@ -13,7 +13,8 @@ class PhaseStructure extends React.Component {
     }
 
     defineHeaders() {
-        return (
+    return (
+   
             <tr>
                 <td><strong>Number</strong></td>
                 <td><strong>Name</strong></td>
@@ -42,12 +43,14 @@ class PhaseStructure extends React.Component {
     }
     
     render() { 
-        console.log('Value of Prop - ', this.props.phaseStructure); 
-        console.log('Value of State - ', this.state.phaseStructure) 
+        const tableStyle = {
+            border: "1px",
+            textAlign: "center"
+        } 
         return (
             <div>
                 <h2>Phase structure of this project</h2>
-                <table id='phaseStructure'>
+                <table id='phaseStructure' style={tableStyle}>
                     <tbody>
                         {this.defineHeaders()}
                         {this.definePhaseTable()}
@@ -61,8 +64,5 @@ class PhaseStructure extends React.Component {
 export default PhaseStructure;
 
 
-// move to PhaseStructure file, delete test
-// check that table updates when new phase is created
-// remove console.logs
-// when fixing define new phase, button should reset form
+// when fixing define new phase, button should reset form, table should update
 

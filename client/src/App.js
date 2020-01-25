@@ -4,6 +4,7 @@ import getWeb3 from "./getWeb3";
 import Header from "./Header.js";
 import ProjectInfo from "./ProjectInfo.js";
 import PhaseStructure from "./PhaseStructure.js"
+import CreatePhase from "./CreatePhase.js"
 import "./App.css";
 
 class App extends Component {
@@ -50,7 +51,6 @@ class App extends Component {
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
       this.setState({project: project})
-      console.log(project)
       this.setState({projectName: project.name, projectDescription: project.description })  
       await this.getPhaseStructure()
     } catch (error) {
@@ -65,11 +65,16 @@ class App extends Component {
   //Executed to define a new phase of the project
   definePhase = async (event) => {
     event.preventDefault()
-    
     const { accounts, contract } = this.state;
-
-    // Defines a new phase of the project
     await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, this.state.initialPayment, this.state.finalPayment).send({ from: accounts[0], gas: 3000000 });
+    this.getPhaseStructure()
+    this.setState({
+      phaseName: "",
+      phaseDescription: "",
+      initialPayment: 0,
+      finalPayment: 0        
+    })
+    console.log("this.state.phaseName", this.state.phaseName)
 
   };
 
@@ -94,7 +99,6 @@ class App extends Component {
     this.setState({
       phaseStructure: phaseArray
     });
-    console.log(this.state.phaseStructure)
     return phaseArray
    } 
  
@@ -112,38 +116,7 @@ class App extends Component {
         <Header/>
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
-          <p>
-            Enter parameters and press button below to define new phase 
-          </p>
-        <form>
-          <div>
-            <label>
-              Phase name:
-              <input type="text" name="phaseName" onChange={this.handleChange} />            
-            </label>
-          </div>
-          <div>
-            <label>
-              Phase description:
-              <input type="text" name="phaseDescription" onChange={this.handleChange} />            
-            </label>
-          </div>
-          <div>
-            <label>
-              Initial payment:
-              <input type="number" name="initialPayment" onChange={this.handleChange} />            
-            </label>
-          </div>
-          <div>
-            <label>
-              Final payment:
-              <input type="number" name="finalPayment" onChange={this.handleChange} />            
-            </label>
-          </div>
-          <div>
-            <button onClick={this.definePhase} >Define new phase </button>
-          </div>
-        </form>
+        <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
       </div>
     );
   }

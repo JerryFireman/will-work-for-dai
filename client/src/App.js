@@ -5,6 +5,7 @@ import Header from "./Header.js";
 import ProjectInfo from "./ProjectInfo.js";
 import PhaseStructure from "./PhaseStructure.js"
 import "./App.css";
+import Test from "./Test.js"
 
 
 
@@ -114,8 +115,7 @@ class App extends Component {
       <div className="App">
         <Header/>
         <ProjectInfo project={this.state.project}/>
-        <PhaseStructure phaseStructure={this.state.phaseStructure}/>
-        <p>hello </p>
+        <Test phaseStructure={this.state.phaseStructure}/>
           <p>
             Enter parameters and press button below to define new phase 
           </p>

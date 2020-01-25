@@ -12,10 +12,18 @@ class Test extends React.Component {
         }
       }
 
-    definePhase() {
+    definePhaseTable() {
         const phaseStructure = this.state.phaseStructure;
         return phaseStructure.map(phase => (
-            <p>{phase.description}</p>
+            <tr key={phase.id}>
+                <td>{phase.id}</td>
+                <td>{phase.name}</td>
+                <td>{phase.description}</td>
+                <td>{phase.initialPayment}</td>
+                <td>{phase.finalPayment}</td>
+                <td>{String(phase.phaseStarted)}</td>
+                <td>{String(phase.clientApproved)}</td>
+            </tr>
             ));
     }
     
@@ -25,7 +33,7 @@ class Test extends React.Component {
         return (
             <div>
                 <p>test here</p>
-                {this.definePhase()}
+                {this.definePhaseTable()}
             </div>
         )
     }

@@ -14,6 +14,7 @@ class App extends Component {
     super(props)
     this.definePhase = this.definePhase.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.getPhaseStructure = this.getPhaseStructure.bind(this)
   }
   
   state = { 
@@ -54,7 +55,7 @@ class App extends Component {
       this.setState({project: project})
       console.log(project)
       this.setState({projectName: project.name, projectDescription: project.description })  
-      this.state.phaseStructure = this.getPhaseStructure()
+      await this.getPhaseStructure()
     } catch (error) {
       // Catch any errors for any of the above operations.
       alert(
@@ -93,41 +94,13 @@ class App extends Component {
         phaseArray.push(phase);
       }
     }
-    this.state.phaseStructure = phaseArray
+    this.setState({
+      phaseStructure: phaseArray
+    });
     console.log(this.state.phaseStructure)
     return phaseArray
    } 
-
-   /*
-   renderTableHeader() {
-    let header = Object.keys(this.state.phaseStructure[0])
-    return header.map((key, index) => {
-       return <th key={index}>{key.toUpperCase()}</th>
-    })
- }
- */
  
- renderTableData() {
-    return this.state.phaseStructure.map((phase, index) => {
-       const { name, description, initialPayment, finalPayment, phaseStarted, phaseApproved, id } = phase //destructuring
-       return (
-          <tr key={id}>
-             <td>{name}</td>
-             <td>{description}</td>
-             <td>{initialPayment}</td>
-             <td>{finalPayment}</td>
-             <td>{phaseStarted}</td>
-             <td>{phaseApproved}</td>
-          </tr>
-       )
-    })
- }
-
-
-
-
-
-  
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
     console.log(event.target.name + ": " + event.target.value);
@@ -141,7 +114,8 @@ class App extends Component {
       <div className="App">
         <Header/>
         <ProjectInfo project={this.state.project}/>
-        <PhaseStructure project={this.state.project}/>
+        <PhaseStructure phaseStructure={this.state.phaseStructure}/>
+        <p>hello </p>
           <p>
             Enter parameters and press button below to define new phase 
           </p>

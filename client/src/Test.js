@@ -12,7 +12,21 @@ class Test extends React.Component {
         }
       }
 
-    definePhaseTable() {
+      defineHeaders() {
+        return (
+            <tr>
+                <td>Number</td>
+                <td>Name</td>
+                <td>Description</td>
+                <td>Initial Payment</td>
+                <td>Final Payment</td>
+                <td>Phase Started</td>
+                <td>Client Approved</td>
+            </tr>
+        )
+    }
+
+      definePhaseTable() {
         const phaseStructure = this.state.phaseStructure;
         return phaseStructure.map(phase => (
             <tr key={phase.id}>
@@ -32,8 +46,12 @@ class Test extends React.Component {
         console.log('Value of State - ', this.state.phaseStructure) 
         return (
             <div>
-                <p>test here</p>
-                {this.definePhaseTable()}
+                <table id='phaseStructure'>
+                    <tbody>
+                        {this.defineHeaders()}
+                        {this.definePhaseTable()}
+                    </tbody>
+                </table>
             </div>
         )
     }

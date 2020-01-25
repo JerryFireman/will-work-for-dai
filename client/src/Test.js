@@ -10,23 +10,23 @@ class Test extends React.Component {
         return {
           phaseStructure: nextProps.phaseStructure,
         }
-      }
+    }
 
-      defineHeaders() {
+    defineHeaders() {
         return (
             <tr>
-                <td>Number</td>
-                <td>Name</td>
-                <td>Description</td>
-                <td>Initial Payment</td>
-                <td>Final Payment</td>
-                <td>Phase Started</td>
-                <td>Client Approved</td>
+                <td><strong>Number</strong></td>
+                <td><strong>Name</strong></td>
+                <td><strong>Description</strong></td>
+                <td><strong>Initial Payment</strong></td>
+                <td><strong>Final Payment</strong></td>
+                <td><strong>Phase Started</strong></td>
+                <td><strong>Client Approved</strong></td>
             </tr>
         )
     }
 
-      definePhaseTable() {
+    definePhaseTable() {
         const phaseStructure = this.state.phaseStructure;
         return phaseStructure.map(phase => (
             <tr key={phase.id}>
@@ -46,6 +46,7 @@ class Test extends React.Component {
         console.log('Value of State - ', this.state.phaseStructure) 
         return (
             <div>
+                <h2>Phase structure of this project</h2>
                 <table id='phaseStructure'>
                     <tbody>
                         {this.defineHeaders()}
@@ -58,3 +59,10 @@ class Test extends React.Component {
 }
 
 export default Test;
+
+// add bold type to headers
+// add title: Phase Structure of {project.name}
+// move to PhaseStructure file, delete test
+// check that table updates when new phase is created
+// remove console.logs
+// when fixing define new phase, button should reset form

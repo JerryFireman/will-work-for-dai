@@ -6,6 +6,8 @@ import ProjectInfo from "./ProjectInfo.js";
 import PhaseStructure from "./PhaseStructure.js"
 import CreatePhase from "./CreatePhase.js"
 import ClientDashboard from "./ClientDashboard.js"
+//import ServiceProviderDashboard from "./ClientDashboard.js"
+
 import "./App.css";
 
 class App extends Component {
@@ -15,6 +17,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.getPhaseStructure = this.getPhaseStructure.bind(this)
     this.approvePhaseStructure = this.approvePhaseStructure.bind(this)
+    this.deposit = this.deposit.bind(this)
 
   }
   
@@ -29,7 +32,8 @@ class App extends Component {
     initialPayment: 0,
     finalPayment: 0,
     phaseStructure: [],
-    project: {}
+    project: {},
+    depositAmount: 0
   };
 
   componentDidMount = async () => {
@@ -47,6 +51,8 @@ class App extends Component {
         SimpleStorageContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
+      let balance = await web3.eth.getBalance(accounts[1])
+      console.log("client balance", balance)
 
       // Set web3, accounts, and contract to the state.
       this.setState({ web3, accounts, contract: instance });
@@ -77,6 +83,31 @@ class App extends Component {
     })
   };
 
+    //Executed by the client to deposit funds into contract                 
+      deposit = async () => {
+        const web3 = this.state.web3;
+        const accounts = this.state.accounts;
+        const contract = this.state.contract;
+        console.log("address 2",accounts[1])
+        console.log("towei",web3.utils.toWei(this.state.depositAmount,"ether"))
+        try {
+          await web3.eth.sendTransaction({from:accounts[1], to:contract._address, value:String(web3.utils.toWei(this.state.depositAmount,"ether"))});
+          this.setState({
+            depositAmount: 0
+          });
+          let balance = await web3.eth.getBalance(accounts[1])
+          console.log("client balance", balance)
+          let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
+          console.log("contract balance", conbalance)
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          alert(
+          `Deposit into contract failed. Check console for details.`,
+        );
+        console.error(error);
+        }
+      }
+
   //Executed to retrieve the current phase structure 
   getPhaseStructure = async () => {
     const { contract } = this.state;
@@ -102,7 +133,6 @@ class App extends Component {
    }
    
   approvePhaseStructure = async (event) => {
-    event.preventDefault()
     const { accounts, contract } = this.state;
     try {
       const response = await contract.methods.approvePhaseStructure().send({ from: accounts[1], gas: 3000000 });
@@ -134,7 +164,7 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard approvePhaseStructure={this.approvePhaseStructure}/>
+        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} deposit={this.deposit}/>
       </div>
     );
   }

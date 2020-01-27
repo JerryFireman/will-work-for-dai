@@ -1,11 +1,6 @@
 import React from "react";
 
 class ClientDashboard extends React.Component { 
-    constructor(props) { 
-        super(props); 
-        this.state = {} 
-    } 
-
     render() { 
         const buttonStyle = {
             height: "75px", 
@@ -19,11 +14,11 @@ class ClientDashboard extends React.Component {
                     <label>
                         Enter amount of funds to deposit:
                         <br/>
-                        <input type="text" name="phaseName" value={this.props.phaseName} onChange={this.props.handleChange} />            
+                        <input type="number" name="depositAmount" value={this.props.depositAmount} onChange={this.props.handleChange} />            
                     </label>
                     <span>
                         <br/>
-                        <button style={buttonStyle} >Deposit funds </button>
+                        <button style={buttonStyle} onClick={this.props.deposit}>Deposit funds </button>
                     </span>
                 </form>
                 <form>
@@ -40,7 +35,7 @@ class ClientDashboard extends React.Component {
                 </form>
                 <br/>
                 <button style={buttonStyle} onClick={this.props.approvePhaseStructure} >Approve phase structure </button>
-                <button style={buttonStyle} >Approve current phase </button>
+                <button style={buttonStyle} onClick={this.props.deposit} >Approve current phase </button>
            </div>
 
         )

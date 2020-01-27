@@ -13,7 +13,7 @@ class PhaseStructure extends React.Component {
     }
 
     defineHeaders() {
-        return (
+            return (
    
             <tr>
                 <th><strong>Number</strong></th>

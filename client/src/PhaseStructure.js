@@ -13,16 +13,17 @@ class PhaseStructure extends React.Component {
     }
 
     defineHeaders() {
-    return (
+        console.log(this.state.phaseStructure)
+        return (
    
             <tr>
-                <td><strong>Number</strong></td>
-                <td><strong>Name</strong></td>
-                <td><strong>Description</strong></td>
-                <td><strong>Initial Payment</strong></td>
-                <td><strong>Final Payment</strong></td>
-                <td><strong>Phase Started</strong></td>
-                <td><strong>Client Approved</strong></td>
+                <th><strong>Number</strong></th>
+                <th><strong>Name</strong></th>
+                <th><strong>Description</strong></th>
+                <th><strong>Initial Payment</strong></th>
+                <th><strong>Final Payment</strong></th>
+                <th><strong>Phase Started</strong></th>
+                <th><strong>Client Approved</strong></th>
             </tr>
         )
     }
@@ -39,18 +40,14 @@ class PhaseStructure extends React.Component {
                 <td>{String(phase.phaseStarted)}</td>
                 <td>{String(phase.clientApproved)}</td>
             </tr>
-            ));
+        ));
     }
     
     render() { 
-        const tableStyle = {
-            border: "1px",
-            textAlign: "center"
-        } 
-        return (
+       return (
             <div>
                 <h2>Phase structure of this project</h2>
-                <table id='phaseStructure' style={tableStyle}>
+                <table align="center">
                     <tbody>
                         {this.defineHeaders()}
                         {this.definePhaseTable()}
@@ -62,7 +59,3 @@ class PhaseStructure extends React.Component {
 }
 
 export default PhaseStructure;
-
-
-// when fixing define new phase, button should reset form, table should update
-

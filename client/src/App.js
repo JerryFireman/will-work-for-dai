@@ -5,6 +5,7 @@ import Header from "./Header.js";
 import ProjectInfo from "./ProjectInfo.js";
 import PhaseStructure from "./PhaseStructure.js"
 import CreatePhase from "./CreatePhase.js"
+import ClientDashboard from "./ClientDashboard.js"
 import "./App.css";
 
 class App extends Component {
@@ -74,8 +75,6 @@ class App extends Component {
       initialPayment: 0,
       finalPayment: 0        
     })
-    console.log("this.state.phaseName", this.state.phaseName)
-
   };
 
   //Executed to retrieve the current phase structure 
@@ -117,6 +116,7 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
+        <ClientDashboard />
       </div>
     );
   }

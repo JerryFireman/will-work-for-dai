@@ -49,6 +49,3 @@ class CreatePhase extends React.Component {
 }
 
 export default CreatePhase;
-
-// reset form after create new phase
-// center table

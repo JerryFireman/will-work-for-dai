@@ -15,6 +15,7 @@ class ProjectInfo extends Component {
                     Client approved phase structure: {String(this.props.project.clientApprovedPhaseStructure)}<br/>
                     Project cancelled: {String(this.props.project.projectCancelled)}<br/>
                     Project completed: {String(this.props.project.projectCompleted)}<br/>
+                    Phase exists: {String(this.props.project.phaseExists)}<br/>
                 </p>
            </div>
         )

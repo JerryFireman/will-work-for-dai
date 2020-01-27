@@ -3,13 +3,13 @@ pragma solidity >=0.4.21 <0.7.0;
 contract SimpleStorage {
   uint storedData;
 
-  function set(uint x) public {
-    storedData = x;
-  }
+    function set(uint x) public {
+        storedData = x;
+    }
 
-  function get() public view returns (uint) {
-    return storedData;
-  }
+    function get() public view returns (uint) {
+        return storedData;
+    }
 
     // @dev The person providing the service
     address payable public serviceProvider;
@@ -42,6 +42,7 @@ contract SimpleStorage {
         bool clientApprovedPhaseStructure;
         bool projectCancelled;
         bool projectCompleted;
+        bool phaseExists; // Tracks whether at least one phase has been created
     }
 
     Project thisProject;
@@ -79,6 +80,7 @@ contract SimpleStorage {
         thisProject.clientApprovedPhaseStructure = false;
         thisProject.projectCancelled = false;
         thisProject.projectCompleted = false;
+        thisProject.phaseExists = false;
     }
 
     // @dev Used by client to deposit funds into contract
@@ -141,6 +143,7 @@ contract SimpleStorage {
         newPhase.initialPayment = _initialPayment;
         newPhase.finalPayment = _finalPayment;
         idGenerator++;
+        thisProject.phaseExists = true;
         return idGenerator - 1;
     }
 
@@ -148,7 +151,7 @@ contract SimpleStorage {
     function readProject()
         public
         view
-        returns(string memory name, string memory description, address client, uint currentPhase, uint serviceProviderBalance, uint escrowBalance, uint clientBalance, bool clientApprovedPhaseStructure, bool projectCancelled, bool projectCompleted)
+        returns(string memory name, string memory description, address client, uint currentPhase, uint serviceProviderBalance, uint escrowBalance, uint clientBalance, bool clientApprovedPhaseStructure, bool projectCancelled, bool projectCompleted, bool phaseExists)
     {
         name = thisProject.name;
         description = thisProject.description;
@@ -160,9 +163,10 @@ contract SimpleStorage {
         clientApprovedPhaseStructure = thisProject.clientApprovedPhaseStructure;
         projectCancelled = thisProject.projectCancelled;
         projectCompleted = thisProject.projectCompleted;
+        phaseExists = thisProject.phaseExists;
         return(name, description, client, currentPhase, serviceProviderBalance,
             escrowBalance, clientBalance, clientApprovedPhaseStructure,
-            projectCancelled, projectCompleted);
+            projectCancelled, projectCompleted, phaseExists);
     }
 
      // @dev Provides information on a phase of the project
@@ -209,6 +213,7 @@ contract SimpleStorage {
         onlyClient
         returns(bool)
     {
+        require(thisProject.phaseExists) == true,"No phases have been created yet");
         require(thisProject.clientApprovedPhaseStructure == false,"The client has already approved the phase structure");
         thisProject.clientApprovedPhaseStructure = true;
         return thisProject.clientApprovedPhaseStructure;

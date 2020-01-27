@@ -99,15 +99,11 @@ class App extends Component {
     return phaseArray
    }
    
-  //Executed by client to approve the phase structure of the project
-  // response, project, instance not defined
-  // const response const project put instance in state?
-  // require that their be at least one phase
   approvePhaseStructure = async (event) => {
     event.preventDefault()
     const { accounts, contract } = this.state;
     try {
-      const response = await contract.methods.approvePhaseStructure.send({ from: accounts[1], gas: 3000000 });
+      const response = await contract.methods.approvePhaseStructure().send({ from: accounts[1], gas: 3000000 });
       if (response) {
         const project = await contract.methods.readProject().call();
         this.setState({project: project})
@@ -121,7 +117,6 @@ class App extends Component {
     }
   };
 
- 
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
     console.log(event.target.name + ": " + event.target.value);
@@ -137,7 +132,7 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard/>
+        <ClientDashboard approvePhaseStructure={this.approvePhaseStructure}/>
       </div>
     );
   }

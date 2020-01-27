@@ -39,7 +39,7 @@ class ClientDashboard extends React.Component {
                     </span>
                 </form>
                 <br/>
-                <button style={buttonStyle} >Approve phase structure </button>
+                <button style={buttonStyle} onClick={this.props.approvePhaseStructure} >Approve phase structure </button>
                 <button style={buttonStyle} >Approve current phase </button>
            </div>
 

@@ -15,10 +15,7 @@ class ClientDashboard extends React.Component {
         return (
             <div>
                 <h2>Client dashboard</h2>
-                <button style={buttonStyle} >Approve phase structure </button>
-                <button style={buttonStyle} >Approve current phase </button>
                 <form>
-                    <br/>
                     <label>
                         Enter amount of funds to deposit:
                         <br/>
@@ -41,6 +38,9 @@ class ClientDashboard extends React.Component {
                         <button style={buttonStyle} >Withdraw funds </button>
                     </span>
                 </form>
+                <br/>
+                <button style={buttonStyle} >Approve phase structure </button>
+                <button style={buttonStyle} >Approve current phase </button>
            </div>
 
         )

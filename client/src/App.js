@@ -20,8 +20,7 @@ class App extends Component {
     web3: null,
     accounts: null,
     contract: null,
-    projectName: "",
-    projectDescription: "",
+    instance: null,
     storageValue: 0,
     phaseName: "",
     phaseDescription: "",
@@ -52,7 +51,6 @@ class App extends Component {
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
       this.setState({project: project})
-      this.setState({projectName: project.name, projectDescription: project.description })  
       await this.getPhaseStructure()
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -99,7 +97,30 @@ class App extends Component {
       phaseStructure: phaseArray
     });
     return phaseArray
-   } 
+   }
+   
+  //Executed by client to approve the phase structure of the project
+  // response, project, instance not defined
+  // const response const project put instance in state?
+  // require that their be at least one phase
+  approvePhaseStructure = async (event) => {
+    event.preventDefault()
+    const { accounts, contract } = this.state;
+    try {
+      const response = await contract.methods.approvePhaseStructure.send({ from: accounts[1], gas: 3000000 });
+      if (response) {
+        const project = await contract.methods.readProject().call();
+        this.setState({project: project})
+      }
+    } catch (error) {
+      // Catch any errors for any of the above operations.
+      alert(
+        `Attempt to approve phase structure returned error. Check console for details.`,
+      );
+      console.error(error);
+    }
+  };
+
  
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -116,11 +137,10 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard />
+        <ClientDashboard/>
       </div>
     );
   }
 }
-
 
 export default App;

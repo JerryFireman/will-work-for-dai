@@ -22101,10 +22101,16 @@
       "links": {},
       "address": "0x1b73849098c9929e33d87314BDC764630dBF85aF",
       "transactionHash": "0x557c0f15d324038ded7bbfa9058d90edf8bc9c3494449e72bb4bf6bbd8a2e899"
+    },
+    "1580139041139": {
+      "events": {},
+      "links": {},
+      "address": "0xd4d13c99e89422293c91D947663c0784265af902",
+      "transactionHash": "0x45cbdc71194ee534fdf4038efa6ddc6c426b0235956f02bffb4d2201af4fa1c3"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2020-01-27T01:00:26.438Z",
+  "updatedAt": "2020-01-27T15:30:53.471Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

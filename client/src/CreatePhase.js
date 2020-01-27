@@ -2,12 +2,12 @@ import React from "react";
 
 class CreatePhase extends React.Component {
     render() {
-        const buttonStyle = {
-            height: "50px", 
-            width: "100px",
-            fontSize: "14px"
-        } 
-        return (
+      const buttonStyle = {
+        height: "75px", 
+        width: "100px",
+        fontSize: "14px"
+    } 
+    return (
         <div>
             <p>
                 Enter parameters and press button below to define new phase 

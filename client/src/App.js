@@ -14,6 +14,8 @@ class App extends Component {
     this.definePhase = this.definePhase.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.getPhaseStructure = this.getPhaseStructure.bind(this)
+    this.approvePhaseStructure = this.approvePhaseStructure.bind(this)
+
   }
   
   state = { 
@@ -106,6 +108,7 @@ class App extends Component {
       const response = await contract.methods.approvePhaseStructure().send({ from: accounts[1], gas: 3000000 });
       if (response) {
         const project = await contract.methods.readProject().call();
+        console.log("project.phaseExists",project.phaseExists)
         this.setState({project: project})
       }
     } catch (error) {
@@ -119,7 +122,6 @@ class App extends Component {
 
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
-    console.log(event.target.name + ": " + event.target.value);
   }
  
   render() {

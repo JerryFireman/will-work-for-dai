@@ -213,7 +213,7 @@ contract SimpleStorage {
         onlyClient
         returns(bool)
     {
-        require(thisProject.phaseExists) == true,"No phases have been created yet");
+        require(thisProject.phaseExists == true,"No phases have been created yet");
         require(thisProject.clientApprovedPhaseStructure == false,"The client has already approved the phase structure");
         thisProject.clientApprovedPhaseStructure = true;
         return thisProject.clientApprovedPhaseStructure;

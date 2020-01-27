@@ -13,7 +13,6 @@ class PhaseStructure extends React.Component {
     }
 
     defineHeaders() {
-        console.log(this.state.phaseStructure)
         return (
    
             <tr>

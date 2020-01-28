@@ -51,14 +51,24 @@ class App extends Component {
         SimpleStorageContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
-      let balance = await web3.eth.getBalance(accounts[1])
-      console.log("client balance", balance)
-
       // Set web3, accounts, and contract to the state.
       this.setState({ web3, accounts, contract: instance });
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
       this.setState({project: project})
+      var clientBalance = this.state.project.clientBalance;
+      clientBalance = String(clientBalance);
+      clientBalance = web3.utils.fromWei(clientBalance, 'ether');
+      console.log("clientBalance before setState", clientBalance);
+      this.setState(prevState => {
+        let project = Object.assign({}, prevState.project);
+        project.clientBalance = clientBalance;
+        return { project };
+      })
+      console.log("clientBalance from state after setState", this.state.project.clientBalance)
+      console.log("escrow balance from state after setState",this.state.project.escrowBalance);
+      console.log("service provider balance from state after setState",this.state.project.serviceProviderBalance);
+
       await this.getPhaseStructure()
     } catch (error) {
       // Catch any errors for any of the above operations.
@@ -85,20 +95,26 @@ class App extends Component {
 
     //Executed by the client to deposit funds into contract                 
       deposit = async () => {
-        const web3 = this.state.web3;
-        const accounts = this.state.accounts;
-        const contract = this.state.contract;
-        console.log("address 2",accounts[1])
-        console.log("towei",web3.utils.toWei(this.state.depositAmount,"ether"))
-        try {
-          await web3.eth.sendTransaction({from:accounts[1], to:contract._address, value:String(web3.utils.toWei(this.state.depositAmount,"ether"))});
+        console.log("1")
+        const { accounts, contract, web3 } = this.state;
+        let balance = await web3.eth.getBalance(accounts[1])
+        console.log("client balance", balance)
+      try {
+          //await web3.eth.sendTransaction({from:accounts[1], to:contract._address, value:String(web3.utils.toWei(this.state.depositAmount,"ether"))});
+          contract.methods.deposit().send({from: accounts[1], gas: 3000000, value: String(web3.utils.toWei(this.state.depositAmount,"ether"))});
           this.setState({
             depositAmount: 0
           });
+          // Call readProject() to obtain project information and add to state
+          const project = await contract.methods.readProject().call();
+          this.setState({project: project})
+          console.log("accounts 1 address", accounts[1])
           let balance = await web3.eth.getBalance(accounts[1])
-          console.log("client balance", balance)
+          console.log("client wallet balance", balance)
           let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
           console.log("contract balance", conbalance)
+          console.log("client balance in contract", this.state.project.clientBalance)
+
         } catch (error) {
           // Catch any errors for any of the above operations.
           alert(

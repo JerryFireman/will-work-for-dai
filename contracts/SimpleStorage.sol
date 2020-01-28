@@ -95,12 +95,7 @@ contract SimpleStorage {
     }
 
     // Fallback function returns funds sent to contract without data
-    function()
-        external
-        payable
-    {
-
-    }
+    // function() payable {};
 
     // @dev Used by client to withdraw funds from contract
     // @param _withdrawAmount amount client wants to withdraw

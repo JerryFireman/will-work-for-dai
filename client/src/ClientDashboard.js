@@ -10,17 +10,15 @@ class ClientDashboard extends React.Component {
         return (
             <div>
                 <h2>Client dashboard</h2>
-                <form>
+                <form onSubmit={this.props.deposit}>
                     <label>
                         Enter amount of funds to deposit:
                         <br/>
                         <input type="number" name="depositAmount" value={this.props.depositAmount} onChange={this.props.handleChange} />            
                     </label>
-                    <span>
                         <br/>
-                        <button style={buttonStyle} onClick={this.props.deposit}>Deposit funds </button>
-                    </span>
                 </form>
+                <button style={buttonStyle} onClick={this.props.deposit} >Deposit funds </button>
                 <form>
                     <br/>
                     <label>
@@ -35,7 +33,8 @@ class ClientDashboard extends React.Component {
                 </form>
                 <br/>
                 <button style={buttonStyle} onClick={this.props.approvePhaseStructure} >Approve phase structure </button>
-                <button style={buttonStyle} onClick={this.props.deposit} >Approve current phase </button>
+                <button style={buttonStyle} onClick={this.props.deposit} >Deposit funds </button>
+                <br/>
            </div>
 
         )

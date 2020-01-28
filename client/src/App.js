@@ -142,11 +142,43 @@ class App extends Component {
           this.setState({
             clientWithdrawalAmount: 0
           });
-
         } catch (error) {
           // Catch any errors for any of the above operations.
           alert(
             `Attempt by client to withdraw funds returned error. Check console for details.`,
+          );
+          console.error(error);
+        }
+          // Call readProject() to obtain project information and add to state
+          const project = await contract.methods.readProject().call();
+          this.setState({project: project})
+          let balance = await web3.eth.getBalance(accounts[1])
+          console.log("client wallet balance", balance)
+          let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
+          console.log("contract balance", conbalance)
+          console.log("client balance in contract", this.state.project.clientBalance)
+        
+      };
+
+      // @dev Executed by service provider to withdraw funds from contract
+      serviceProviderWithdrawal = async () => {
+        const { accounts, contract, web3 } = this.state;
+        console.log("hit service provider withdrawal!")
+        var serviceProviderWithdrawalAmount = this.state.serviceProviderWithdrawalAmount
+        serviceProviderWithdrawalAmount = String(serviceProviderWithdrawalAmount)
+        serviceProviderWithdrawalAmount = web3.utils.toWei(serviceProviderWithdrawalAmount,"ether")
+        serviceProviderWithdrawalAmount = String(serviceProviderWithdrawalAmount)
+        console.log("serviceProviderWithdrawalAmount", serviceProviderWithdrawalAmount)
+        try {
+          //await contract.methods.clientWithdrawal(String(this.state.serviceProviderWithdrawalAmount)).send({ from: accounts[1], gas: 3000000 });
+          await contract.methods.serviceProviderWithdrawal(serviceProviderWithdrawalAmount).send({ from: accounts[0], gas: 3000000 });
+          this.setState({
+            serviceProviderWithdrawalAmount: 0
+          });
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          alert(
+            `Attempt by service provider to withdraw funds returned error. Check console for details.`,
           );
           console.error(error);
         }
@@ -246,7 +278,7 @@ class App extends Component {
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
         <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal} approvePhase={this.approvePhase}/>
-        <ServiceProviderDashboard />
+        <ServiceProviderDashboard handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} />
       </div>
     );
   }

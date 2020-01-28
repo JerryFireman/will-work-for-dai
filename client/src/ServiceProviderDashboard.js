@@ -16,14 +16,14 @@ class ServiceProviderDashboard extends React.Component {
                     <label>
                         Enter amount of funds to withdraw:
                         <br/>
-                        <input type="number" name="clientWithdrawalAmount" value={this.props.clientWithdrawalAmount} onChange={this.props.handleChange} />            
+                        <input type="number" name="serviceProviderWithdrawalAmount" value={this.props.serviceProviderWithdrawalAmount} onChange={this.props.handleChange} />            
                     </label>
                         <br/>
                 </form>
-                <button style={buttonStyle} onClick={this.props.clientWithdrawal} >Withdraw funds </button>
+                <button style={buttonStyle} onClick={this.props.serviceProviderWithdrawal} >Withdraw funds </button>
                <br/>
                 <br/>
-                <button style={buttonStyle} onClick={this.props.approvePhase} >Approve current phase</button>
+                <button style={buttonStyle} onClick={this.props.startPhase} >Start phase</button>
                 <br/>
                 <br/>
                 <button style={buttonStyle} onClick={this.props.approvePhase} >Approve current phase</button>

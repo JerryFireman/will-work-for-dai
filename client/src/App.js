@@ -18,6 +18,8 @@ class App extends Component {
     this.getPhaseStructure = this.getPhaseStructure.bind(this)
     this.approvePhaseStructure = this.approvePhaseStructure.bind(this)
     this.deposit = this.deposit.bind(this)
+    this.clientWithdrawal = this.clientWithdrawal.bind(this)
+
 
   }
   
@@ -33,7 +35,9 @@ class App extends Component {
     finalPayment: 0,
     phaseStructure: [],
     project: {},
-    depositAmount: 0
+    depositAmount: 0,
+    clientWithdrawalAmount: 0,
+    serviceProviderWithdrawalAmount: 0
   };
 
   componentDidMount = async () => {
@@ -93,15 +97,14 @@ class App extends Component {
     })
   };
 
-    //Executed by the client to deposit funds into contract                 
+  //Executed by the client to deposit funds into contract                 
       deposit = async () => {
         console.log("1")
         const { accounts, contract, web3 } = this.state;
         let balance = await web3.eth.getBalance(accounts[1])
         console.log("client balance", balance)
       try {
-          //await web3.eth.sendTransaction({from:accounts[1], to:contract._address, value:String(web3.utils.toWei(this.state.depositAmount,"ether"))});
-          contract.methods.deposit().send({from: accounts[1], gas: 3000000, value: String(web3.utils.toWei(this.state.depositAmount,"ether"))});
+          await contract.methods.deposit().send({from: accounts[1], gas: 3000000, value: String(web3.utils.toWei(this.state.depositAmount,"ether"))});
           this.setState({
             depositAmount: 0
           });
@@ -124,7 +127,41 @@ class App extends Component {
         }
       }
 
-  //Executed to retrieve the current phase structure 
+      // @dev Executed by client to withdraw funds from contract
+      clientWithdrawal = async () => {
+        const { accounts, contract, web3 } = this.state;
+        console.log("hit client withdrawal!")
+        var clientWithdrawalAmount = this.state.clientWithdrawalAmount
+        clientWithdrawalAmount = String(clientWithdrawalAmount)
+        clientWithdrawalAmount = web3.utils.toWei(clientWithdrawalAmount,"ether")
+        clientWithdrawalAmount = String(clientWithdrawalAmount)
+        console.log("clientWithdrawalAmount", clientWithdrawalAmount)
+        try {
+          //await contract.methods.clientWithdrawal(String(this.state.clientWithdrawalAmount)).send({ from: accounts[1], gas: 3000000 });
+          await contract.methods.clientWithdrawal(clientWithdrawalAmount).send({ from: accounts[1], gas: 3000000 });
+          this.setState({
+            clientWithdrawalAmount: 0
+          });
+
+        } catch (error) {
+          // Catch any errors for any of the above operations.
+          alert(
+            `Attempt by client to withdraw funds returned error. Check console for details.`,
+          );
+          console.error(error);
+        }
+          // Call readProject() to obtain project information and add to state
+          const project = await contract.methods.readProject().call();
+          this.setState({project: project})
+          let balance = await web3.eth.getBalance(accounts[1])
+          console.log("client wallet balance", balance)
+          let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
+          console.log("contract balance", conbalance)
+          console.log("client balance in contract", this.state.project.clientBalance)
+        
+      };
+
+      //Executed to retrieve the current phase structure 
   getPhaseStructure = async () => {
     const { contract } = this.state;
     const idGenerator = await contract.methods.idGenerator().call();
@@ -148,7 +185,7 @@ class App extends Component {
     return phaseArray
    }
    
-  approvePhaseStructure = async (event) => {
+  approvePhaseStructure = async () => {
     const { accounts, contract } = this.state;
     try {
       const response = await contract.methods.approvePhaseStructure().send({ from: accounts[1], gas: 3000000 });
@@ -180,7 +217,7 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} deposit={this.deposit}/>
+        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal}/>
       </div>
     );
   }

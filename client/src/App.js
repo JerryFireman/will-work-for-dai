@@ -6,7 +6,7 @@ import ProjectInfo from "./ProjectInfo.js";
 import PhaseStructure from "./PhaseStructure.js"
 import CreatePhase from "./CreatePhase.js"
 import ClientDashboard from "./ClientDashboard.js"
-//import ServiceProviderDashboard from "./ClientDashboard.js"
+import ServiceProviderDashboard from "./ServiceProviderDashboard.js"
 
 import "./App.css";
 
@@ -185,7 +185,8 @@ class App extends Component {
     return phaseArray
    }
    
-  approvePhaseStructure = async () => {
+  // @dev Executed by client to approve phase structure
+   approvePhaseStructure = async () => {
     const { accounts, contract } = this.state;
     try {
       const response = await contract.methods.approvePhaseStructure().send({ from: accounts[1], gas: 3000000 });
@@ -203,6 +204,33 @@ class App extends Component {
     }
   };
 
+  // @dev Executed by client to approve current phase
+  approvePhase = async () => {
+    const { accounts, contract } = this.state;
+    try {
+      await contract.methods.approvePhase().send({ from: accounts[1], gas: 3000000 });
+    } catch (error) {
+      // Catch any errors for the above operation.
+      alert(
+        `Attempt to approve current phase. Check console for details.`,
+      );
+      console.error(error);
+    }
+  };
+
+  // @dev Executed by service provider to start next phase of project
+  startPhase = async () => {
+    const { accounts, contract } = this.state;
+    try {
+      await contract.methods.startPhase().send({ from: accounts[0], gas: 3000000 });
+    } catch (error) {
+      // Catch any errors for the above operation.
+      alert(
+        `Attempt to approve current phase. Check console for details.`,
+      );
+      console.error(error);
+    }
+  };
   handleChange (event) {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -217,7 +245,8 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal}/>
+        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal} approvePhase={this.approvePhase}/>
+        <ServiceProviderDashboard />
       </div>
     );
   }

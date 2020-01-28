@@ -33,6 +33,12 @@ class ClientDashboard extends React.Component {
                <br/>
                 <button style={buttonStyle} onClick={this.props.approvePhaseStructure} >Approve phase structure </button>
                 <br/>
+                <br/>
+                <button style={buttonStyle} onClick={this.props.approvePhase} >Approve current phase</button>
+                <br/>
+                <br/>
+                <button style={buttonStyle} onClick={this.props.approvePhase} >Cancel project</button>
+                <br/>
            </div>
 
         )

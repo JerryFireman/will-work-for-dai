@@ -244,7 +244,35 @@ class App extends Component {
     } catch (error) {
       // Catch any errors for the above operation.
       alert(
-        `Attempt to approve current phase. Check console for details.`,
+        `Attempt by client to approve current phase failed. Check console for details.`,
+      );
+      console.error(error);
+    }
+  };
+
+  // @dev Executed by client to cancel project
+  clientCancelProject = async () => {
+    const { accounts, contract } = this.state;
+    try {
+      await contract.methods.cancelProject().send({ from: accounts[1], gas: 3000000 });
+    } catch (error) {
+      // Catch any errors for the above operation.
+      alert(
+        `Attempt by client to cancel project failed. Check console for details.`,
+      );
+      console.error(error);
+    }
+  };
+
+  // @dev Executed by service provider to cancel project
+  serviceProviderCancelProject = async () => {
+    const { accounts, contract } = this.state;
+    try {
+      await contract.methods.cancelProject().send({ from: accounts[0], gas: 3000000 });
+    } catch (error) {
+      // Catch any errors for the above operation.
+      alert(
+        `Attempt by service provider to cancel project failed. Check console for details.`,
       );
       console.error(error);
     }
@@ -258,7 +286,7 @@ class App extends Component {
     } catch (error) {
       // Catch any errors for the above operation.
       alert(
-        `Attempt to approve current phase. Check console for details.`,
+        `Attempt by service provider to start next phase of project failed. Check console for details.`,
       );
       console.error(error);
     }
@@ -277,8 +305,8 @@ class App extends Component {
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal} approvePhase={this.approvePhase}/>
-        <ServiceProviderDashboard handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} />
+        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal} approvePhase={this.approvePhase} clientCancelProject={this.clientCancelProject}/>
+        <ServiceProviderDashboard handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} startPhase={this.startPhase} serviceProviderCancelProject={this.serviceProviderCancelProject}/>
       </div>
     );
   }

@@ -26,12 +26,8 @@ class ServiceProviderDashboard extends React.Component {
                 <button style={buttonStyle} onClick={this.props.startPhase} >Start phase</button>
                 <br/>
                 <br/>
-                <button style={buttonStyle} onClick={this.props.approvePhase} >Approve current phase</button>
-                <br/>
-                <br/>
-                <button style={buttonStyle} onClick={this.props.approvePhase} >Approve current phase</button>
-                <br/>
-           </div>
+                <button style={buttonStyle} onClick={this.props.serviceProviderCancelProject} >Cancel project</button>
+         </div>
 
         )
     }

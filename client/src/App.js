@@ -64,9 +64,19 @@ class App extends Component {
       clientBalance = String(clientBalance);
       clientBalance = web3.utils.fromWei(clientBalance, 'ether');
       console.log("clientBalance before setState", clientBalance);
+      var escrowBalance = this.state.project.escrowBalance;
+      escrowBalance = String(escrowBalance);
+      escrowBalance = web3.utils.fromWei(escrowBalance, 'ether');
+      console.log("escrowBalance before setState", escrowBalance);
+      var serviceProviderBalance = this.state.project.serviceProviderBalance;
+      serviceProviderBalance = String(serviceProviderBalance);
+      serviceProviderBalance = web3.utils.fromWei(serviceProviderBalance, 'ether');
+      console.log("serviceProviderBalance before setState", serviceProviderBalance);
       this.setState(prevState => {
         let project = Object.assign({}, prevState.project);
         project.clientBalance = clientBalance;
+        project.escrowBalance = escrowBalance;
+        project.serviceProviderBalance = serviceProviderBalance;
         return { project };
       })
       console.log("clientBalance from state after setState", this.state.project.clientBalance)
@@ -84,11 +94,18 @@ class App extends Component {
   };
 
   //Executed to define a new phase of the project
-  definePhase = async (event) => {
-    event.preventDefault()
-    const { accounts, contract } = this.state;
-    await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, this.state.initialPayment, this.state.finalPayment).send({ from: accounts[0], gas: 3000000 });
-    this.getPhaseStructure()
+  definePhase = async () => {
+    const { accounts, contract, web3 } = this.state;
+    var initialPayment = this.state.initialPayment;
+    initialPayment = String(initialPayment)
+    initialPayment = web3.utils.toWei(initialPayment,"ether")
+    initialPayment = String(initialPayment)
+    var finalPayment = this.state.finalPayment;
+    finalPayment = String(finalPayment)
+    finalPayment = web3.utils.toWei(finalPayment,"ether")
+    finalPayment = String(finalPayment)
+    await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, initialPayment, finalPayment).send({ from: accounts[0], gas: 3000000 });
+//    this.getPhaseStructure()
     this.setState({
       phaseName: "",
       phaseDescription: "",
@@ -193,7 +210,7 @@ class App extends Component {
         
       };
 
-      //Executed to retrieve the current phase structure 
+  //Executed to retrieve the current phase structure 
   getPhaseStructure = async () => {
     const { contract } = this.state;
     const idGenerator = await contract.methods.idGenerator().call();
@@ -209,7 +226,9 @@ class App extends Component {
         delete phase[5];
         phase.id = i
         phaseArray.push(phase);
+        console.log("phase.initialPayment", phase.initialPayment)
       }
+      
     }
     this.setState({
       phaseStructure: phaseArray
@@ -282,7 +301,7 @@ class App extends Component {
   startPhase = async () => {
     const { accounts, contract } = this.state;
     try {
-      await contract.methods.startPhase().send({ from: accounts[0], gas: 3000000 });
+      await contract.methods.serviceProviderStartNextPhase().send({ from: accounts[0], gas: 3000000 });
     } catch (error) {
       // Catch any errors for the above operation.
       alert(

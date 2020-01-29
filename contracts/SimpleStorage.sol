@@ -247,14 +247,14 @@ contract SimpleStorage {
             thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].initialPayment;
             thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].initialPayment;
             thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
-            thisProject.escrowBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
+            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].finalPayment;
         }
         if (msg.sender == serviceProvider)
         {
             thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].initialPayment;
             thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].initialPayment;
             thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
-            thisProject.escrowBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
+            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].finalPayment;
         }
         thisProject.projectCancelled = true;
         return thisProject.projectCancelled;

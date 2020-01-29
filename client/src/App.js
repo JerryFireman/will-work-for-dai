@@ -225,7 +225,7 @@ class App extends Component {
         delete phase[5];
         phase.id = i
         phaseArray.push(phase);
-        console.log("phase.initialPayment", phase.initialPayment)
+        console.log("phase", phase)
       }
       
     }

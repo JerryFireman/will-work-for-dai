@@ -211,6 +211,7 @@ class App extends Component {
 
   //Executed to retrieve the current phase structure 
   getPhaseStructure = async () => {
+    const web3 = this.state.web3;
     const { contract } = this.state;
     const idGenerator = await contract.methods.idGenerator().call();
     var phaseArray = [];
@@ -224,8 +225,19 @@ class App extends Component {
         delete phase[4];
         delete phase[5];
         phase.id = i
-        phaseArray.push(phase);
         console.log("phase", phase)
+        var ip = phase.initialPayment
+        ip = web3.utils.fromWei(ip, 'ether');
+        ip = parseFloat(ip).toFixed(4);
+        console.log("ip",ip)
+        phase.initialPayment = ip
+        console.log("phase", phase)
+        var fp = phase.finalPayment
+        fp = web3.utils.fromWei(fp, 'ether');
+        fp = parseFloat(fp).toFixed(4);
+        console.log("fp",fp)
+        phase.finalPayment = fp
+        phaseArray.push(phase);
       }
       
     }

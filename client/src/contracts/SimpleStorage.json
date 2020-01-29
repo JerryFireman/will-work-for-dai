@@ -22877,10 +22877,16 @@
       "links": {},
       "address": "0x2007bf1bFbd909bEe177716Ebe8ee81A6B219235",
       "transactionHash": "0x133d58bb5399ce6f7c8d798d7eda4d4a4f3a886dd3f940d7d9afa015b7f5fb48"
+    },
+    "1580307131648": {
+      "events": {},
+      "links": {},
+      "address": "0xA0c837c6EBF2c3F69903eEf4811e8C8C3f5488F2",
+      "transactionHash": "0xcd452fe43dede18f52dc2fafd9760b3134236ed0e018b658a9846610282753c5"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2020-01-29T01:38:18.719Z",
+  "updatedAt": "2020-01-29T14:12:25.196Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {

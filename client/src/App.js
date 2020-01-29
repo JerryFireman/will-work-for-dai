@@ -61,16 +61,15 @@ class App extends Component {
       const project = await instance.methods.readProject().call();
       this.setState({project: project})
       var clientBalance = this.state.project.clientBalance;
-      clientBalance = String(clientBalance);
       clientBalance = web3.utils.fromWei(clientBalance, 'ether');
-      console.log("clientBalance before setState", clientBalance);
+      clientBalance = parseFloat(clientBalance).toFixed(4);
       var escrowBalance = this.state.project.escrowBalance;
-      escrowBalance = String(escrowBalance);
       escrowBalance = web3.utils.fromWei(escrowBalance, 'ether');
+      escrowBalance = parseFloat(escrowBalance).toFixed(4);
       console.log("escrowBalance before setState", escrowBalance);
       var serviceProviderBalance = this.state.project.serviceProviderBalance;
-      serviceProviderBalance = String(serviceProviderBalance);
       serviceProviderBalance = web3.utils.fromWei(serviceProviderBalance, 'ether');
+      serviceProviderBalance = parseFloat(serviceProviderBalance).toFixed(4);
       console.log("serviceProviderBalance before setState", serviceProviderBalance);
       this.setState(prevState => {
         let project = Object.assign({}, prevState.project);

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+// @dev This component displays the status of the project on the user interface
 class ProjectInfo extends Component {
     render() {
         return (

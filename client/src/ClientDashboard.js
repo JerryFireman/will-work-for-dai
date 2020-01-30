@@ -1,5 +1,6 @@
 import React from "react";
 
+// @dev This component delivers the client dashboard portion of the user interface
 class ClientDashboard extends React.Component { 
     render() { 
         const buttonStyle = {

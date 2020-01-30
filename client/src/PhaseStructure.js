@@ -1,5 +1,6 @@
 import React from "react";
 
+// @dev This component displays the phase structure of the project
 class PhaseStructure extends React.Component { 
     constructor(props) { 
         super(props); 

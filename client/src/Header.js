@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+// @dev This component displays the header of the application in the user interface
 class Header extends Component {
     render() {
         return (

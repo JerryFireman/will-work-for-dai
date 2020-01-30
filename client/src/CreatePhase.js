@@ -1,5 +1,6 @@
 import React from "react";
 
+// @dev This component delivers the portion of the user interface where the user defined a new phase
 class CreatePhase extends React.Component {
     render() {
       const buttonStyle = {

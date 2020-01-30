@@ -10,6 +10,7 @@ import ServiceProviderDashboard from "./ServiceProviderDashboard.js"
 
 import "./App.css";
 
+// @dev main app that controls user interface
 class App extends Component {
   constructor(props) {
     super(props)

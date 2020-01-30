@@ -1,7 +1,7 @@
 import React from "react";
 
+// @dev This component delivers the service provider dashboard portion of the user interface
 class ServiceProviderDashboard extends React.Component { 
-
     render() { 
         const buttonStyle = {
             height: "75px", 

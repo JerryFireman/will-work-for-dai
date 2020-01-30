@@ -1,15 +1,9 @@
 pragma solidity >=0.4.21 <0.7.0;
 
-contract SimpleStorage {
-  uint storedData;
+// @title Project Agreements: Self-enforcing smart contracts avoid project work disputes
+// @author Jerry Fireman
 
-    function set(uint x) public {
-        storedData = x;
-    }
-
-    function get() public view returns (uint) {
-        return storedData;
-    }
+contract ProjectAgreements {
 
     // @dev The person providing the service
     address payable public serviceProvider;
@@ -29,7 +23,6 @@ contract SimpleStorage {
     }
 
     // @dev Tracks the information associated with the project
-    // how to read Phases mapping: https://ethereum.stackexchange.com/questions/46840/how-to-access-mappings-with-web3js
     struct Project {
         string name;
         string description;
@@ -94,9 +87,6 @@ contract SimpleStorage {
         return thisProject.clientBalance;
     }
 
-    // Fallback function returns funds sent to contract without data
-    // function() payable {};
-
     // @dev Used by client to withdraw funds from contract
     // @param _withdrawAmount amount client wants to withdraw
     function clientWithdrawal(uint _withdrawAmount)
@@ -125,7 +115,11 @@ contract SimpleStorage {
         return thisProject.serviceProviderBalance;
     }
 
-    // @ dev Used by service provider to define the phases in the project
+    // @dev Used by service provider to define a phase of the project
+    // @param _name name of the phase
+    // @param _description description of the phase
+    // @param _initialPayment amount that service provider earns even if phase cancelled by client
+    // @param _finalPayment refunded to client if phase is cancelled
     function createPhase(string memory _name, string memory _description, uint _initialPayment, uint _finalPayment)
         public
         onlyServiceProvider
@@ -165,6 +159,7 @@ contract SimpleStorage {
     }
 
      // @dev Provides information on a phase of the project
+     // @param phase of the project for which information is request
     function readPhase(uint _phase)
         public
         view
@@ -181,8 +176,6 @@ contract SimpleStorage {
     }
 
     // @dev Executed by service provider to start the next phase of the project
-    // @dev All previous phases must be completed
-    // @dev Client balance must exceed initial payment
     function serviceProviderStartNextPhase()
         public
         onlyServiceProvider
@@ -227,8 +220,7 @@ contract SimpleStorage {
         thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
         thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].initialPayment;
         thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].finalPayment;
-
-    // @dev If the current phase is the last phase of the project then project is finished
+        // @dev If the current phase is the last phase of the project then project is finished
         if (thisProject.currentPhase == (idGenerator - 1))
         {
             thisProject.projectCompleted = true;
@@ -259,6 +251,4 @@ contract SimpleStorage {
         thisProject.projectCancelled = true;
         return thisProject.projectCancelled;
     }
-
-
 }

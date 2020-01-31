@@ -7,7 +7,6 @@ import PhaseStructure from "./PhaseStructure.js"
 import CreatePhase from "./CreatePhase.js"
 import ClientDashboard from "./ClientDashboard.js"
 import ServiceProviderDashboard from "./ServiceProviderDashboard.js"
-
 import "./App.css";
 
 // @dev main app that controls user interface
@@ -43,11 +42,13 @@ class App extends Component {
 
   componentDidMount = async () => {
     try {
+
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
+      console.log(accounts);
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
@@ -118,8 +119,8 @@ class App extends Component {
       deposit = async () => {
         console.log("1")
         const { accounts, contract, web3 } = this.state;
-        let balance = await web3.eth.getBalance(accounts[1])
-        console.log("client balance", balance)
+        // let balance = await web3.eth.getBalance(accounts[1])
+        // console.log("client balance", balance)
       try {
           await contract.methods.deposit().send({from: accounts[1], gas: 3000000, value: String(web3.utils.toWei(this.state.depositAmount,"ether"))});
           this.setState({

@@ -22317,10 +22317,17 @@
       "links": {},
       "address": "0xA4636ef8a47a5BCc54c10c2a0ae0FFC8C3A984Ef",
       "transactionHash": "0x090a182ada309d35fb0d6df185e9a8079ea375ff3f41383e2d5c08915942284c"
+    },
+    "1580478683551": {
+      "events": {},
+      "links": {},
+      "address": "0xeDD5d4bd0859E3BA2501cfBcf35E3c32BAAC1F37",
+      "transactionHash": "0xb2e1e6918840c1340272d5f6eb8328cf6c476e6667905063a59f727c8ba2f659"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2020-01-30T20:38:08.211Z",
+  "updatedAt": "2020-01-31T13:51:38.034Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "serviceProviderWithdrawal(uint256)": {

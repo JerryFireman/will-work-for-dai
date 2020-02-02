@@ -31,9 +31,9 @@ The risk to each party is reduced because the funds are held by an impartial sma
 7. Close and reopen your terminal
 8. Install Truffle: $ npm install truffle -g
 9. Install Ganache CLI: $ npm install ganache-cli -g
-10. Create a new subdirectory and clone the repo:  git clone https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements.git
+10. Create a new subdirectory and clone the repo:  git clone https://github.com/JerryFireman/class-project.git
 11. Navigate to the new subdirectory and install dependencies: $ npm install
-12. Disable the Metamask extension if it is enabled (this application supports Metamask but it requires multiple users which makes it awkward to use Metamask): In Chrome, select three dots menu on upper right, more tools, extensions, disable Metamask.
+12. Disable the Metamask extension if it is enabled (this application supports Metamask but it requires multiple users which makes it difficult to use Metamask since as far as I know Metamask injections only a single account): In Chrome, select three dots menu on upper right, more tools, extensions, disable Metamask.
 13. Compile the contracts and run tests: $ truffle test
 14. Run Ganache CLI: $ ganache-cli
 15. Deploy the contracts to the Ganache blockchain: $ truffle migrate --reset

@@ -1,0 +1,22 @@
+{
+  "name": "class-project",
+  "version": "1.0.0",
+  "description": "## Client/service provider relationships are difficult to manage I was in business providing marketing services to technology companies on a project basis for many years so I know firsthand that it’s often difficult to make and enforce project agreements between service providers and their clients. A legal agreement is too expensive for most projects. So project work is usually governed by verbal agreements whose lack of clarity often leads to disputes. If one party doesn’t fulfill its obligations, the other party is typically out of luck. Even where a legal agreement exists, going to court to enforce it is so expensive that it only makes sense for the largest projects.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JerryFireman/class-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JerryFireman/class-project/issues"
+  },
+  "homepage": "https://github.com/JerryFireman/class-project#readme"
+}

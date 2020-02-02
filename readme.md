@@ -21,33 +21,38 @@ A blockchain application called Project Agreements addresses this problem by def
 ## Advantages of this application compared to current methods
 The risk to each party is reduced because the funds are held by an impartial smart contract that releases them according to rules that have been agreed in advance by both parties. Transaction costs, including the cost of creating and enforcing the agreement, are virtually zero. Embedding project agreements into a smart contract also creates the potential to define large numbers of smart contracts to unleash an army of freelancers to accomplish projects or goals of a magnitude that today must be handled by organizations with large numbers of employees.
 
-## How to install and demo the software
-1. Install Node.js if it is not already installed: $ apt install nodejs
-2. Install npm: $ apt install npm
-2. Install git if it is not already installed: $ npm install git
-3. Install Truffle: $ npm install truffle -g
-4. Install Ganache CLI: $ npm install ganache-cli -g
-5. Create a new subdirectory and clone the repo:  git clone https://github.com/JerryFireman/class-project.git
-6. Install dependencies: $ npm install
-7. Disable the Metamask extension if it is enabled (this application supports Metamask but it requires multiple users which makes it awkward to use Metamask): In Chrome, select three dots menu on upper right, more tools, extensions, disable Metamask.
-8. Compile the contracts and run tests: $ truffle test
-9. Run Ganache CLI: $ ganache-cli
-10. Deploy the contracts to the Ganache blockchain: $ truffle migrate --reset
-11. Open a browser and navigate to the client subdirectory of the repo clone directory: cd ./src/client
-12. Run the React app: $ npm run start
-13. A new browser window should open with a default project named "Sample Project"
-14. Create a phase by filling in the form under "Phase Structure of this Project. Enter a name for the phase, and an initial and final payment. The difference between the initial and final payment is that if the client cancels the project during the phase, the initial payment goes to the service provider as compensation for work completed to date while the final payment is returned to the client. When the form is filled in, click "Define new phase" and the phase will appear in the phase structure of the project. Create several more phases if you wish.
-15. Once the phase structure is completed, the client must approve the phase structure by pressing the "Approve phase structure" button.
-16. Before the project can begin, the client must deposit enough funds to cover the initial and final payments for the first phase of the project. Fill in the amount of eth to deposit in the "Deposit funds" form in the client dashboard and press the button to make the deposit. As soon as the blocks are mined, the deposit will appear in the client balance under "Overview of current project: Sample Project". 
-17. Next, the first phase can be started by pressing "Start phase" in the service provider dashboard. Notice how the client's deposit moves from the client balance to the escrow balance. It is now being held by the contract in escrow and cannot be withdrawn by either party. 
-18. As a next step, approve the first phase by pressing the "Approve current phase" button in the client dashboard. The funds to pay for the phase now move from the escrow balance to the service provider balance. 
-19. You can now enter the amount earned by the service provider in the first phase in the "Withdraw funds" form in the service provider dashboard and press the button to make the withdrawal. Note how the service provider balance is updated.
-20. Finally, you can experiment with the functionality for cancelling a phase. Make the required deposit for and approve the next phase as explained above. Then instead of approving the phase, cancel the phase from either the service provider or client dashboard. If you experiment with cancelling from both dashboards, you'll see that whichever party initiates the cancelation is penalized by losing the initial payment. This incentivizes the parties to cooperate with eachother to complete the project.
+## How to install and demo the software on Linux Ubuntu 
+1. Update apt package manager: $ sudo apt update
+2. Install git: $ sudo apt install git
+3. Install Node.js from the repositories: sudo apt install nodejs
+4. Install npm: $ sudo apt install npm
+5. Install curl: $sudo ap-get install curl
+6. Install nvm: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.2/install.sh | bash
+7. Close and reopen your terminal
+8. Install Truffle: $ npm install truffle -g
+9. Install Ganache CLI: $ npm install ganache-cli -g
+10. Create a new subdirectory and clone the repo:  git clone https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements.git
+11. Navigate to the new subdirectory and install dependencies: $ npm install
+12. Disable the Metamask extension if it is enabled (this application supports Metamask but it requires multiple users which makes it awkward to use Metamask): In Chrome, select three dots menu on upper right, more tools, extensions, disable Metamask.
+13. Compile the contracts and run tests: $ truffle test
+14. Run Ganache CLI: $ ganache-cli
+15. Deploy the contracts to the Ganache blockchain: $ truffle migrate --reset
+16. Navigate to the client subdirectory of the repo clone directory: cd client
+17. Run the React app: $ npm run start
+18. A new browser window should open with a default project named "Sample Project"
+19. Create a phase for the project by filling in the form under "Phase Structure of this Project. Enter a name for the phase, and an initial and final payment. The difference between the initial and final payment is that if the client cancels the project during the phase, the initial payment goes to the service provider as compensation for work completed to date while the final payment is returned to the client. When the form is filled in, click "Define new phase" and the phase will appear in the phase structure of the project. Create several more phases if you wish.
+20. Once the phase structure is completed, the client must approve the phase structure by pressing the "Approve phase structure" button.
+21. Before the project can begin, the client must deposit enough funds to cover the initial and final payments for the first phase of the project. Fill in the amount of eth to deposit in the "Deposit funds" form in the client dashboard and press the button to make the deposit. As soon as the blocks are mined, the deposit will appear in the client balance under "Overview of current project: Sample Project". 
+22. Next, the first phase can be started by pressing "Start phase" in the service provider dashboard. Notice how the client's deposit moves from the client balance to the escrow balance. It is now being held by the contract in escrow and cannot be withdrawn by either party. 
+23. As a next step, approve the first phase by pressing the "Approve current phase" button in the client dashboard. The funds to pay for the phase now move from the escrow balance to the service provider balance. 
+24. You can now enter the amount earned by the service provider in the first phase in the "Withdraw funds" form in the service provider dashboard and press the button to make the withdrawal. Note how the service provider balance is updated.
+25. Finally, you can experiment with the functionality for cancelling a phase. Make the required deposit for and approve the next phase as explained above. Then instead of approving the phase, cancel the phase from either the service provider or client dashboard. If you experiment with cancelling from both dashboards, you'll see that whichever party initiates the cancelation is penalized by losing the initial payment. This incentivizes the parties to cooperate with eachother to complete the project.
 
 ## Project requirements notes
 1. Here’s a link to a video demonstration of the software: https://www.youtube.com/watch?v=EVH_bu5H0-4&feature=youtu.be.
-2. Project README: https://github.com/JerryFireman/class-project/blob/master/readme.md
-3. Design pattern decisions: https://github.com/JerryFireman/class-project/blob/master/design_pattern_decisions.md
-4. Avoiding common attacks: https://github.com/JerryFireman/class-project/blob/master/avoiding_common_attacks.md
-5. My program does not require a library so I demonstrated library usage in LibraryDemo.sol https://github.com/JerryFireman/class-project/blob/master/LibraryDemo.sol
-6. My smart contract is deployed on the Rinkeby network: https://github.com/JerryFireman/class-project/blob/master/deployed_addresses.txt
+2. Project README: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/readme.md
+3. Design pattern decisions: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/design_pattern_decisions.md
+4. Avoiding common attacks: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/avoiding_common_attacks.md
+5. My program does not require a library so I demonstrated library usage in LibraryDemo.sol https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/LibraryDemo.sol
+6. My smart contract is deployed on the Rinkeby network: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/deployed_addresses.txt
+7. Running with Metamask

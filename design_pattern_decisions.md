@@ -14,3 +14,6 @@ I used the withdrawal pattern in the clientWithdrawal and serviceProviderWithdra
 
 ### 5. State machine
 The state machine design pattern is used in this project in the Phase struct to keep track of the current phase. This makes it possible to prevent execution of functions that do not apply to the current phase.
+
+### 6. Circuit breaker
+I felt that a circuit breaker did not make sense because there is no one owner to whom funds could be transferred in the case of an emergency stop. The contract services as an intermediary between a client and service provider who both have a stake in the funds stored in the contract so a circuit could provide a security risk.

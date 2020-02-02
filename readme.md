@@ -50,9 +50,9 @@ The risk to each party is reduced because the funds are held by an impartial sma
 
 ## Project requirements notes
 1. Here’s a link to a video demonstration of the software: https://www.youtube.com/watch?v=EVH_bu5H0-4&feature=youtu.be.
-2. Project README: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/readme.md
-3. Design pattern decisions: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/design_pattern_decisions.md
-4. Avoiding common attacks: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/avoiding_common_attacks.md
-5. My program does not require a library so I demonstrated library usage in LibraryDemo.sol https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/LibraryDemo.sol
-6. My smart contract is deployed on the Rinkeby network: https://github.com/JerryFireman/Jerry-Fireman-Project-Agreements/blob/master/deployed_addresses.txt
+2. Project README: https://github.com/JerryFireman/class-project/blob/master/readme.md
+3. Design pattern decisions: https://github.com/JerryFireman/class-project/blob/master/design_pattern_decisions.md
+4. Avoiding common attacks: https://github.com/JerryFireman/class-project/blob/master/avoiding_common_attacks.md
+5. My program does not require a library so I demonstrated library usage in LibraryDemo.sol https://github.com/JerryFireman/class-project/blob/master/LibraryDemo.sol
+6. My smart contract is deployed on the Rinkeby network: https://github.com/JerryFireman/class-project/blob/master/deployed_addresses.txt
 7. This proof of concept offers full functionality running on Ganache CLI with Metamask disabled but only limited functionality with Metamask enabled. The problem, to the best of  my knowledge, is that Metamask injects only a single account, while this program requires two accounts, the service provider and the client. So the user interface opens with Metamask enabled, but is not able to do much else because most every function requires two accounts. In testing, I was able to overcome this limitation by hard coding the second account into the software. A better solution would be to have the user enter the second account into the user interface but I did not have time to implement this.

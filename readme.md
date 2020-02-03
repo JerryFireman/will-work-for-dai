@@ -1,4 +1,5 @@
 # Self-enforcing smart contracts avoid project work disputes
+Here’s a link to a video demonstration of the software: https://www.youtube.com/watch?v=EVH_bu5H0-4&feature=youtu.be.
 
 ## Client/service provider relationships are difficult to manage
 I was in business providing marketing services to technology companies on a project basis for many years so I know firsthand that it’s often difficult to make and enforce project agreements between service providers and their clients. A legal agreement is too expensive for most projects. So project work is usually governed by verbal agreements whose lack of clarity often leads to disputes. If one party doesn’t fulfill its obligations, the other party is typically out of luck. Even where a legal agreement exists, going to court to enforce it is so expensive that it only makes sense for the largest projects.
@@ -31,8 +32,8 @@ The risk to each party is reduced because the funds are held by an impartial sma
 7. Close and reopen your terminal
 8. Install Truffle: $ npm install truffle -g
 9. Install Ganache CLI: $ npm install ganache-cli -g
-10. Create a new subdirectory and clone the repo:  git clone https://github.com/JerryFireman/class-project.git
-11. Navigate to the new subdirectory and install dependencies: $ npm install
+10. Clone the repo:  git clone https://github.com/JerryFireman/project-agreements.git
+11. Navigate to the client subdirectory of the new project-agreements directory and install create-react-app dependencies: $ npm install
 12. Disable the Metamask extension if it is enabled (this application supports Metamask but it requires multiple users which makes it difficult to use Metamask since as far as I know Metamask injections only a single account): In Chrome, select three dots menu on upper right, more tools, extensions, disable Metamask.
 13. Compile the contracts and run tests: $ truffle test
 14. Run Ganache CLI: $ ganache-cli
@@ -47,12 +48,3 @@ The risk to each party is reduced because the funds are held by an impartial sma
 23. As a next step, approve the first phase by pressing the "Approve current phase" button in the client dashboard. The funds to pay for the phase now move from the escrow balance to the service provider balance. 
 24. You can now enter the amount earned by the service provider in the first phase in the "Withdraw funds" form in the service provider dashboard and press the button to make the withdrawal. Note how the service provider balance is updated.
 25. Finally, you can experiment with the functionality for cancelling a phase. Make the required deposit for and approve the next phase as explained above. Then instead of approving the phase, cancel the phase from either the service provider or client dashboard. If you experiment with cancelling from both dashboards, you'll see that whichever party initiates the cancelation is penalized by losing the initial payment. This incentivizes the parties to cooperate with eachother to complete the project.
-
-## Project requirements notes
-1. Here’s a link to a video demonstration of the software: https://www.youtube.com/watch?v=EVH_bu5H0-4&feature=youtu.be.
-2. Project README: https://github.com/JerryFireman/class-project/blob/master/readme.md
-3. Design pattern decisions: https://github.com/JerryFireman/class-project/blob/master/design_pattern_decisions.md
-4. Avoiding common attacks: https://github.com/JerryFireman/class-project/blob/master/avoiding_common_attacks.md
-5. My program does not require a library so I demonstrated library usage in LibraryDemo.sol https://github.com/JerryFireman/class-project/blob/master/LibraryDemo.sol
-6. My smart contract is deployed on the Rinkeby network: https://github.com/JerryFireman/class-project/blob/master/deployed_addresses.txt
-7. This proof of concept offers full functionality running on Ganache CLI with Metamask disabled but only limited functionality with Metamask enabled. The problem, to the best of  my knowledge, is that Metamask injects only a single account, while this program requires two accounts, the service provider and the client. So the user interface opens with Metamask enabled, but is not able to do much else because most every function requires two accounts. In testing, I was able to overcome this limitation by hard coding the second account into the software. A better solution would be to have the user enter the second account into the user interface but I did not have time to implement this.

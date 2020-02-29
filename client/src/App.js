@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import ProjectAgreementsContract from "./contracts/ProjectAgreements.json";
 import getWeb3 from "./getWeb3";
+import Dashboards from './components/Dashboards.js';
 import Header from "./Header.js";
+import NavBar from './components/NavBar.js';
+import PhaseTable from './components/PhaseTable.js';
 import ProjectInfo from "./ProjectInfo.js";
 import PhaseStructure from "./PhaseStructure.js"
 import CreatePhase from "./CreatePhase.js"
@@ -333,7 +336,10 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <Header/>
+        <Header project={this.state.project}/>
+        <NavBar project={this.state.project}/>
+        <PhaseTable phaseStructure={this.state.phaseStructure}/>
+        <Dashboards />
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />

@@ -99,6 +99,7 @@ class App extends Component {
 
   //Executed to define a new phase of the project
   definePhase = async () => {
+    console.log("hit definePhase")
     const { accounts, contract, web3 } = this.state;
     var initialPayment = this.state.initialPayment;
     initialPayment = String(initialPayment)
@@ -326,7 +327,7 @@ class App extends Component {
       console.error(error);
     }
   };
-  handleChange (event) {
+  handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
  
@@ -339,7 +340,7 @@ class App extends Component {
         <Header project={this.state.project}/>
         <NavBar project={this.state.project}/>
         <PhaseTable phaseStructure={this.state.phaseStructure}/>
-        <Dashboards />
+        <Dashboards handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} startPhase={this.startPhase} serviceProviderCancelProject={this.serviceProviderCancelProject} definePhase={this.definePhase} phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment}/>
         <ProjectInfo project={this.state.project}/>
         <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
         <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />

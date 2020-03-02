@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dashboards() {
+export default function Dashboards(props) {
   const classes = useStyles();
 
   return (
@@ -61,11 +61,11 @@ export default function Dashboards() {
                   Service Provider Dashboard
               </Typography><br/>
               <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="filled-basic" label="Phase name" variant="filled" fullWidth="true" /><br/>
-                <TextField id="filled-basic" label="Initial payment" variant="filled" /><br/>
-                <TextField id="filled-basic" label="Final payment" variant="filled" /><br/>
+                <TextField id="filled-basic" label="Phase name" variant="filled" fullWidth="true" type="text" name="phaseName" value={props.phaseName} onChange={props.handleChange}/><br/>
+                <TextField id="filled-basic" label="Initial payment" variant="filled" type="number" name="initialPayment" value={props.initialPayment} onChange={props.handleChange}/><br/>
+                <TextField id="filled-basic" label="Final payment" variant="filled" type="number" name="finalPayment" value={props.finalPayment} onChange={props.handleChange}/><br/>
                 <form className={classes.root} noValidate autoComplete="off">  
-                  <StyledButton>
+                  <StyledButton onClick={props.definePhase} >
                   Create new phase
                 </StyledButton>
               </form><br/>

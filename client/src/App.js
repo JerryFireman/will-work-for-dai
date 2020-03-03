@@ -6,6 +6,8 @@ import Header from "./Header.js";
 import NavBar from './components/NavBar.js';
 import PhaseTable from './components/PhaseTable.js';
 import ProjectInfo from "./ProjectInfo.js";
+import ProjectOverview from "./components/ProjectOverview.js";
+
 import PhaseStructure from "./PhaseStructure.js"
 import CreatePhase from "./CreatePhase.js"
 import ClientDashboard from "./ClientDashboard.js"
@@ -339,6 +341,7 @@ class App extends Component {
       <div className="App">
         <Header project={this.state.project}/>
         <NavBar project={this.state.project}/>
+        <ProjectOverview project={this.state.project}/>
         <PhaseTable phaseStructure={this.state.phaseStructure}/>
         <Dashboards handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} startPhase={this.startPhase} serviceProviderCancelProject={this.serviceProviderCancelProject} definePhase={this.definePhase} phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment}/>
         <ProjectInfo project={this.state.project}/>

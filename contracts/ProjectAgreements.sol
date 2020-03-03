@@ -140,7 +140,7 @@ contract ProjectAgreements {
     function readProject()
         public
         view
-        returns(string memory name, string memory description, address client, uint currentPhase, uint serviceProviderBalance, uint escrowBalance, uint clientBalance, bool clientApprovedPhaseStructure, bool projectCancelled, bool projectCompleted, bool phaseExists)
+        returns(string memory name, string memory description, address client, address serviceProvider, uint currentPhase, uint serviceProviderBalance, uint escrowBalance, uint clientBalance, bool clientApprovedPhaseStructure, bool projectCancelled, bool projectCompleted, bool phaseExists)
     {
         name = thisProject.name;
         description = thisProject.description;
@@ -153,7 +153,7 @@ contract ProjectAgreements {
         projectCancelled = thisProject.projectCancelled;
         projectCompleted = thisProject.projectCompleted;
         phaseExists = thisProject.phaseExists;
-        return(name, description, client, currentPhase, serviceProviderBalance,
+        return(name, description, client, serviceProvider, currentPhase, serviceProviderBalance,
             escrowBalance, clientBalance, clientApprovedPhaseStructure,
             projectCancelled, projectCompleted, phaseExists);
     }

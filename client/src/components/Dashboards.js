@@ -31,24 +31,40 @@ export default function Dashboards(props) {
                   Client Dashboard
               </Typography><br/>
               <form className={classes.root} noValidate autoComplete="off">
-                <StyledButton>
+                <StyledButton onClick={props.approvePhaseStructure}>
                   Approve phase structure
                 </StyledButton><br/>
               </form><br/>
               <form className={classes.root} noValidate autoComplete="off">            
-                <TextField id="filled-basic" label="Amount to Deposit" variant="filled" />
-                <StyledButton>Deposit</StyledButton>
+                <TextField 
+                  id="filled-basic" 
+                  label="Amount to Deposit" 
+                  variant="filled" 
+                  type="number" 
+                  name="depositAmount" 
+                  value={props.depositAmount} 
+                  onChange={props.handleChange} 
+                />
+                <StyledButton onClick={props.deposit}>Deposit</StyledButton>
               </form><br/>
               <form className={classes.root} noValidate autoComplete="off">
-                 <TextField id="filled-basic" label="Amount to withdraw" variant="filled" />
-                <StyledButton>Withdraw</StyledButton>
+                 <TextField 
+                  id="filled-basic" 
+                  label="Amount to withdraw" 
+                  variant="filled" 
+                  type="number" 
+                  name="clientWithdrawalAmount" 
+                  value={props.clientWithdrawalAmount} 
+                  onChange={props.handleChange}
+                />
+                <StyledButton onClick={props.clientWithdrawal}>Withdraw</StyledButton>
               </form><br/>
               <form className={classes.root} noValidate autoComplete="off">
-              <StyledButton>
+              <StyledButton onClick={props.approvePhase}>
                   Approve current phase
                 </StyledButton>
                 </form><br/>
-                <StyledButton>
+                <StyledButton onClick={props.clientCancelProject}>
                   Cancel project
               </StyledButton>
             </Box>
@@ -70,14 +86,25 @@ export default function Dashboards(props) {
                 </StyledButton>
               </form><br/>
               <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="filled-basic" label="Amount to withdraw" variant="filled" />
-                <StyledButton>Withdraw</StyledButton>
+                <TextField 
+                  id="filled-basic" 
+                  label="Amount to withdraw" 
+                  variant="filled" 
+                  type="number" 
+                  name="serviceProviderWithdrawalAmount" 
+                  value={props.serviceProviderWithdrawalAmount} 
+                  onChange={props.handleChange}
+                />
+                <StyledButton 
+                  onClick={props.serviceProviderWithdrawal}>
+                  Withdraw
+                </StyledButton>
               </form><br/>
-                <StyledButton>
+                <StyledButton onClick={props.startPhase}>
                   Start next phase
                 </StyledButton><br/>
                 </form><br/>
-                <StyledButton>
+                <StyledButton onClick={props.serviceProviderCancelProject}>
                   Cancel project
                 </StyledButton>
                 </Box>

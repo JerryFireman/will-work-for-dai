@@ -25,7 +25,7 @@ export default function Dashboards(props) {
     <div className={classes.root}>
       <Grid container spacing={3} margin="50px">
         <Grid item xs={6}>
-          <Paper className={classes.paper} square="true" elevation="0">
+          <Paper className={classes.paper} square={true} elevation={0}>
           <Box fontWeight="fontWeightBold" textAlign="left">    
               <Typography variant="h4" color="primary" >
                   Client Dashboard
@@ -71,21 +71,48 @@ export default function Dashboards(props) {
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper} square="true" elevation="0">
+          <Paper className={classes.paper} square={true} elevation={0}>
           <Box fontWeight="fontWeightBold" textAlign="left">    
               <Typography variant="h4" color="primary">
                   Service Provider Dashboard
               </Typography><br/>
               <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="filled-basic" label="Phase name" variant="filled" fullWidth="true" type="text" name="phaseName" value={props.phaseName} onChange={props.handleChange}/><br/>
-                <TextField id="filled-basic" label="Initial payment" variant="filled" type="number" name="initialPayment" value={props.initialPayment} onChange={props.handleChange}/><br/>
-                <TextField id="filled-basic" label="Final payment" variant="filled" type="number" name="finalPayment" value={props.finalPayment} onChange={props.handleChange}/><br/>
-                <form className={classes.root} noValidate autoComplete="off">  
-                  <StyledButton onClick={props.definePhase} >
+                <TextField 
+                  id="filled-basic" 
+                  label="Phase name" 
+                  variant="filled" 
+                  fullWidth={true} 
+                  type="text" 
+                  name="phaseName" 
+                  value={props.phaseName} 
+                  onChange={props.handleChange}
+                />
+                <br/>
+                <TextField 
+                  id="filled-basic" 
+                  label="Initial payment" 
+                  variant="filled" 
+                  type="number" 
+                  name="initialPayment" 
+                  value={props.initialPayment} 
+                  onChange={props.handleChange}
+                />
+                <br/>
+                <TextField 
+                  id="filled-basic" 
+                  label="Final payment" 
+                  variant="filled" 
+                  type="number" 
+                  name="finalPayment" 
+                  value={props.finalPayment} 
+                  onChange={props.handleChange}
+                />
+                <br/>
+                <StyledButton onClick={props.definePhase}>
                   Create new phase
                 </StyledButton>
-              </form><br/>
-              <form className={classes.root} noValidate autoComplete="off">
+                </form><br/>
+                <form className={classes.root} noValidate autoComplete="off">
                 <TextField 
                   id="filled-basic" 
                   label="Amount to withdraw" 
@@ -99,10 +126,11 @@ export default function Dashboards(props) {
                   onClick={props.serviceProviderWithdrawal}>
                   Withdraw
                 </StyledButton>
-              </form><br/>
+                </form><br/>
+                <form className={classes.root} noValidate autoComplete="off">
                 <StyledButton onClick={props.startPhase}>
                   Start next phase
-                </StyledButton><br/>
+                </StyledButton>
                 </form><br/>
                 <StyledButton onClick={props.serviceProviderCancelProject}>
                   Cancel project

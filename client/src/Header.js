@@ -10,7 +10,7 @@ class Header extends Component {
                 <Typography variant="h1" color="primary" align="center" padding="20px">
                     Will Work for Dai
                 </Typography>
-                <Typography variant="h6" color="black" align="center" padding="0px">
+                <Typography variant="h6" color="textPrimary" align="center" padding="0px">
                 Harnessing the blockchain to manage and enforce agreements between service providers and clients
                 </Typography>
             </div>

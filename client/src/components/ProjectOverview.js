@@ -21,14 +21,14 @@ export default function ProjectOverview(props) {
   return (
     <div className={classes.root}  >
         <Box paddingBottom={0} marginBottom={0}>
-        <Typography variant="h4" color="primary" textAlign="center"  >
+        <Typography variant="h4" color="primary">
             <br/>Project Overview
         </Typography>
         </Box>
       <Grid container spacing={0} margin="0px">
 
         <Grid item xs={6} margin="0px" padding="0px" >
-          <Paper className={classes.paper} square="true" elevation="0">
+          <Paper className={classes.paper} square={true} elevation={0}>
           <Box textAlign="right" paddingTop={0} marginTop={0} >    
               <Typography variant="body2" color="textPrimary">
                   <strong>
@@ -46,7 +46,7 @@ export default function ProjectOverview(props) {
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper} square="true" elevation="0">
+          <Paper className={classes.paper} square={true} elevation={0}>
           <Box textAlign="left" padding="0px">    
           <Typography variant="body2" padding="0px" color="textPrimary" >
               {props.project.client}<br/>

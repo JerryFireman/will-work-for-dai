@@ -5,13 +5,7 @@ import Dashboards from './components/Dashboards.js';
 import Header from "./Header.js";
 import NavBar from './components/NavBar.js';
 import PhaseTable from './components/PhaseTable.js';
-import ProjectInfo from "./ProjectInfo.js";
 import ProjectOverview from "./components/ProjectOverview.js";
-
-import PhaseStructure from "./PhaseStructure.js"
-import CreatePhase from "./CreatePhase.js"
-import ClientDashboard from "./ClientDashboard.js"
-import ServiceProviderDashboard from "./ServiceProviderDashboard.js"
 import "./App.css";
 
 // @dev main app that controls user interface

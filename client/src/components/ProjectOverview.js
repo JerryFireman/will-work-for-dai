@@ -18,31 +18,39 @@ const useStyles = makeStyles(theme => ({
 
 export default function ProjectOverview(props) {
   const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <div className={classes.root}  >
+    
+
+        <Box paddingBottom={0} marginBottom={0}>
+        <Typography variant="h4" color="primary" textAlign="center"  >
+            <br/>Project Overview
+        </Typography>
+        </Box>
       <Grid container spacing={0} margin="0px">
-        <Grid item xs={5}>
-          <Paper className={classes.paper} variant="outlined">
-          <Box fontWeight="fontWeightBold" textAlign="right">    
-              <Typography variant="h6" color="black" padding="0px">
-                  Client address:<br/>
-                  Client balance:<br/>
-                  Service provider address:<br/>
-                  Service provider balance:<br/>
-                  Escrow balance:<br/>
-                  Phase exists:<br/>
-                  Phase structure approved:<br/>
-                  Project cancelled:
-                  
+
+        <Grid item xs={6} margin="0px" padding="0px" >
+          <Paper className={classes.paper} square="true" elevation="0">
+          <Box textAlign="right" paddingTop={0} marginTop={0} >    
+              <Typography variant="body2" color="textPrimary">
+                  <strong>
+                    Client address:<br/>
+                    Client balance:<br/>
+                    Service provider address:<br/>
+                    Service provider balance:<br/>
+                    Escrow balance:<br/>
+                    Phase exists:<br/>
+                    Phase structure approved:<br/>
+                    Project cancelled:
+                  </strong> 
               </Typography><br/>
             </Box>
           </Paper>
         </Grid>
-        <Grid item xs={7}>
-          <Paper className={classes.paper}>
-          <Box fontWeight="fontWeightBold" textAlign="left" padding="0px">    
-          <Typography variant="h6" color="black" padding="0px">
+        <Grid item xs={6}>
+          <Paper className={classes.paper} square="true" elevation="0">
+          <Box textAlign="left" padding="0px">    
+          <Typography variant="body2" padding="0px" color="textPrimary" >
               {props.project.client}<br/>
               {props.project.clientBalance}<br/>
               {props.project.client}<br/>

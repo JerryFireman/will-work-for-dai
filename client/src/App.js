@@ -341,14 +341,9 @@ class App extends Component {
       <div className="App">
         <Header project={this.state.project}/>
         <NavBar project={this.state.project}/>
-        <ProjectOverview project={this.state.project}/>
         <PhaseTable phaseStructure={this.state.phaseStructure}/>
+        <ProjectOverview project={this.state.project}/>
         <Dashboards handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} startPhase={this.startPhase} serviceProviderCancelProject={this.serviceProviderCancelProject} definePhase={this.definePhase} phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment}/>
-        <ProjectInfo project={this.state.project}/>
-        <PhaseStructure phaseStructure={this.state.phaseStructure} project={this.state.project}/>
-        <CreatePhase handleChange={this.handleChange} definePhase={this.definePhase}  phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment} />
-        <ClientDashboard handleChange={this.handleChange} approvePhaseStructure={this.approvePhaseStructure} depositAmount={this.state.depositAmount} clientWithdrawalAmount={this.state.clientWithdrawalAmount} deposit={this.deposit} clientWithdrawal={this.clientWithdrawal} approvePhase={this.approvePhase} clientCancelProject={this.clientCancelProject}/>
-        <ServiceProviderDashboard handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} startPhase={this.startPhase} serviceProviderCancelProject={this.serviceProviderCancelProject}/>
       </div>
     );
   }

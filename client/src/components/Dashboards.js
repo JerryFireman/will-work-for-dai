@@ -25,7 +25,7 @@ export default function Dashboards(props) {
     <div className={classes.root}>
       <Grid container spacing={3} margin="50px">
         <Grid item xs={6}>
-          <Paper className={classes.paper} variant="outlined">
+          <Paper className={classes.paper} square="true" elevation="0">
           <Box fontWeight="fontWeightBold" textAlign="left">    
               <Typography variant="h4" color="primary" >
                   Client Dashboard
@@ -55,7 +55,7 @@ export default function Dashboards(props) {
           </Paper>
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} square="true" elevation="0">
           <Box fontWeight="fontWeightBold" textAlign="left">    
               <Typography variant="h4" color="primary">
                   Service Provider Dashboard

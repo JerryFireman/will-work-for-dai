@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles({
@@ -19,18 +20,22 @@ export default function PhaseTable(props) {
   const classes = useStyles();
 
   return (
+    <div>
+      <Typography variant="h4" color="primary"  >
+        <br/>Phase Structure
+      </Typography>
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
+        <TableHead variant="body1">
           <TableRow>
             <TableCell><strong>Phase description</strong></TableCell>
             <TableCell align="right"><strong>Initial Payment</strong></TableCell>
-            <TableCell align="right">Final Payment</TableCell>
-            <TableCell align="right">Started</TableCell>
-            <TableCell align="right">Approved</TableCell>
+            <TableCell align="right"><strong>Final Payment</strong></TableCell>
+            <TableCell align="right"><strong>Started</strong></TableCell>
+            <TableCell align="right"><strong>Approved</strong></TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody variant="body1">
           {props.phaseStructure.map(phase => (
             <TableRow key={phase.id}>
               <TableCell component="th" scope="row">
@@ -45,5 +50,6 @@ export default function PhaseTable(props) {
         </TableBody>
       </Table>
     </TableContainer>
+    </div>
   );
 }

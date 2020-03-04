@@ -42,7 +42,8 @@ class App extends Component {
     project: {},
     depositAmount: 0,
     clientWithdrawalAmount: 0,
-    serviceProviderWithdrawalAmount: 0
+    serviceProviderWithdrawalAmount: 0,
+    serviceProvider: ""
   };
 
   componentDidMount = async () => {
@@ -64,6 +65,12 @@ class App extends Component {
       );
       // Set web3, accounts, and contract to the state.
       this.setState({ web3, accounts, contract: instance });
+
+         // @dev call getter function to obtain serviceProvider address
+        const serviceProvider = await instance.methods.serviceProvider().call();
+        console.log("serviceProvider:", serviceProvider)
+        this.setState({serviceProvider: serviceProvider})
+
       // Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
       this.setState({project: project})
@@ -88,6 +95,7 @@ class App extends Component {
       console.log("clientBalance from state after setState", this.state.project.clientBalance)
       console.log("escrow balance from state after setState",this.state.project.escrowBalance);
       console.log("service provider balance from state after setState",this.state.project.serviceProviderBalance);
+      console.log("service provider",this.state.project.serviceProvider);
 
       await this.getPhaseStructure()
     } catch (error) {
@@ -173,6 +181,7 @@ class App extends Component {
           );
           console.error(error);
         }
+
           // Call readProject() to obtain project information and add to state
           const project = await contract.methods.readProject().call();
           this.setState({project: project})
@@ -209,6 +218,7 @@ class App extends Component {
           // Call readProject() to obtain project information and add to state
           const project = await contract.methods.readProject().call();
           this.setState({project: project})
+          console.log("service provider: ",this.state.project.serviceProvider)
           let balance = await web3.eth.getBalance(accounts[1])
           console.log("client wallet balance", balance)
           let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
@@ -341,9 +351,22 @@ class App extends Component {
       <div className="App">
         <Header project={this.state.project}/>
         <NavBar project={this.state.project}/>
-        <PhaseTable phaseStructure={this.state.phaseStructure}/>
-        <ProjectOverview project={this.state.project}/>
-        <Dashboards handleChange={this.handleChange} serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} serviceProviderWithdrawal={this.serviceProviderWithdrawal} startPhase={this.startPhase} serviceProviderCancelProject={this.serviceProviderCancelProject} definePhase={this.definePhase} phaseName={this.state.phaseName} phaseDescription={this.state.phaseDescription} initialPayment={this.state.initialPayment} finalPayment={this.state.finalPayment}/>
+        <ProjectOverview project={this.state.project} serviceProvider={this.state.serviceProvider}/>
+        <PhaseTable 
+          phaseStructure={this.state.phaseStructure}
+        />
+        <Dashboards 
+          handleChange={this.handleChange} 
+          serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} 
+          serviceProviderWithdrawal={this.serviceProviderWithdrawal} 
+          startPhase={this.startPhase} 
+          serviceProviderCancelProject={this.serviceProviderCancelProject} 
+          definePhase={this.definePhase} 
+          phaseName={this.state.phaseName} 
+          phaseDescription={this.state.phaseDescription} 
+          initialPayment={this.state.initialPayment} 
+          finalPayment={this.state.finalPayment}
+        />
       </div>
     );
   }

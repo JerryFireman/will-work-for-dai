@@ -22,7 +22,7 @@ export default function PhaseTable(props) {
   return (
     <div>
       <Typography variant="h4" color="primary"  >
-        <br/>Phase Structure
+        Phase Structure
       </Typography>
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">

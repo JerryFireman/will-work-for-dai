@@ -20,8 +20,6 @@ export default function ProjectOverview(props) {
   const classes = useStyles();
   return (
     <div className={classes.root}  >
-    
-
         <Box paddingBottom={0} marginBottom={0}>
         <Typography variant="h4" color="primary" textAlign="center"  >
             <br/>Project Overview
@@ -43,7 +41,7 @@ export default function ProjectOverview(props) {
                     Phase structure approved:<br/>
                     Project cancelled:
                   </strong> 
-              </Typography><br/>
+              </Typography>
             </Box>
           </Paper>
         </Grid>
@@ -53,13 +51,13 @@ export default function ProjectOverview(props) {
           <Typography variant="body2" padding="0px" color="textPrimary" >
               {props.project.client}<br/>
               {props.project.clientBalance}<br/>
-              {props.project.client}<br/>
+              {props.serviceProvider}<br/>
               {props.project.serviceProviderBalance}<br/>
               {props.project.escrowBalance}<br/>
               {String(props.project.phaseExists)}<br/>
               {String(props.project.clientApprovedPhaseStructure)}<br/>
               {String(props.project.projectCancelled)}
-              </Typography><br/>
+              </Typography>
             </Box>
             </Paper>
         </Grid>

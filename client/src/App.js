@@ -357,15 +357,22 @@ class App extends Component {
         />
         <Dashboards 
           handleChange={this.handleChange} 
-          serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} 
-          serviceProviderWithdrawal={this.serviceProviderWithdrawal} 
-          startPhase={this.startPhase} 
-          serviceProviderCancelProject={this.serviceProviderCancelProject} 
-          definePhase={this.definePhase} 
+          approvePhaseStructure={this.approvePhaseStructure}
+          depositAmount={this.state.depositAmount}
+          deposit={this.deposit} 
+          clientWithdrawalAmount={this.state.clientWithdrawalAmount}
+          clientWithdrawal={this.clientWithdrawal}
+          approvePhase={this.approvePhase} 
+          clientCancelProject={this.clientCancelProject}
           phaseName={this.state.phaseName} 
           phaseDescription={this.state.phaseDescription} 
           initialPayment={this.state.initialPayment} 
           finalPayment={this.state.finalPayment}
+          definePhase={this.definePhase} 
+          serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} 
+          serviceProviderWithdrawal={this.serviceProviderWithdrawal} 
+          startPhase={this.startPhase} 
+          serviceProviderCancelProject={this.serviceProviderCancelProject} 
         />
       </div>
     );

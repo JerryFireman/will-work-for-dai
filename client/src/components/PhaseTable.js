@@ -29,8 +29,8 @@ export default function PhaseTable(props) {
         <TableHead variant="body1">
           <TableRow>
             <TableCell><strong>Phase description</strong></TableCell>
-            <TableCell align="right"><strong>Initial Payment</strong></TableCell>
-            <TableCell align="right"><strong>Final Payment</strong></TableCell>
+            <TableCell align="right"><strong>Locked Payment</strong></TableCell>
+            <TableCell align="right"><strong>Discretionary Payment</strong></TableCell>
             <TableCell align="right"><strong>Started</strong></TableCell>
             <TableCell align="right"><strong>Approved</strong></TableCell>
           </TableRow>

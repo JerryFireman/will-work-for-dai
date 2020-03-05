@@ -24,32 +24,32 @@ export default function PhaseTable(props) {
       <Typography variant="h4" color="primary"  >
         Phase Structure
       </Typography>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead variant="body1">
-          <TableRow>
-            <TableCell><strong>Phase description</strong></TableCell>
-            <TableCell align="right"><strong>Locked Payment</strong></TableCell>
-            <TableCell align="right"><strong>Discretionary Payment</strong></TableCell>
-            <TableCell align="right"><strong>Started</strong></TableCell>
-            <TableCell align="right"><strong>Approved</strong></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody variant="body1">
-          {props.phaseStructure.map(phase => (
-            <TableRow key={phase.id}>
-              <TableCell component="th" scope="row">
-                {phase.name}
-              </TableCell>
-              <TableCell align="right">{phase.lockedPayment}</TableCell>
-              <TableCell align="right">{phase.discretionaryPayment}</TableCell>
-              <TableCell align="right">{String(phase.phaseStarted)}</TableCell>
-              <TableCell align="right">{String(phase.clientApproved)}</TableCell>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} size="small" aria-label="a dense table">
+          <TableHead variant="body1">
+            <TableRow>
+              <TableCell><strong>Phase description</strong></TableCell>
+              <TableCell align="right"><strong>Locked Payment</strong></TableCell>
+              <TableCell align="right"><strong>Discretionary Payment</strong></TableCell>
+              <TableCell align="right"><strong>Started</strong></TableCell>
+              <TableCell align="right"><strong>Approved</strong></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody variant="body1">
+            {props.phaseStructure.map(phase => (
+              <TableRow key={phase.id}>
+                <TableCell component="th" scope="row">
+                  {phase.name}
+                </TableCell>
+                <TableCell align="right">{phase.lockedPayment}</TableCell>
+                <TableCell align="right">{phase.discretionaryPayment}</TableCell>
+                <TableCell align="right">{String(phase.phaseStarted)}</TableCell>
+                <TableCell align="right">{String(phase.clientApproved)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }

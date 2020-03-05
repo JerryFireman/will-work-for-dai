@@ -29,37 +29,37 @@ export default function ProjectOverview(props) {
 
         <Grid item xs={6} margin="0px" padding="0px" >
           <Paper className={classes.paper} square={true} elevation={0}>
-          <Box textAlign="right" paddingTop={0} marginTop={0} >    
+            <Box textAlign="right" paddingTop={0} marginTop={0} >    
               <Typography variant="body2" color="textPrimary">
-                  <strong>
-                    Client address:<br/>
-                    Client balance:<br/>
-                    Service provider address:<br/>
-                    Service provider balance:<br/>
-                    Escrow balance:<br/>
-                    Phase exists:<br/>
-                    Phase structure approved:<br/>
-                    Project cancelled:
-                  </strong> 
+                <strong>
+                  Client address:<br/>
+                  Client balance:<br/>
+                  Service provider address:<br/>
+                  Service provider balance:<br/>
+                  Escrow balance:<br/>
+                  Phase exists:<br/>
+                  Phase structure approved:<br/>
+                  Project cancelled:
+                </strong> 
               </Typography>
             </Box>
           </Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper} square={true} elevation={0}>
-          <Box textAlign="left" padding="0px">    
-          <Typography variant="body2" padding="0px" color="textPrimary" >
-              {props.project.client}<br/>
-              {props.project.clientBalance}<br/>
-              {props.serviceProvider}<br/>
-              {props.project.serviceProviderBalance}<br/>
-              {props.project.escrowBalance}<br/>
-              {String(props.project.phaseExists)}<br/>
-              {String(props.project.clientApprovedPhaseStructure)}<br/>
-              {String(props.project.projectCancelled)}
+            <Box textAlign="left" padding="0px">    
+              <Typography variant="body2" padding="0px" color="textPrimary" >
+                {props.project.client}<br/>
+                {props.project.clientBalance}<br/>
+                {props.serviceProvider}<br/>
+                {props.project.serviceProviderBalance}<br/>
+                {props.project.escrowBalance}<br/>
+                {String(props.project.phaseExists)}<br/>
+                {String(props.project.clientApprovedPhaseStructure)}<br/>
+                {String(props.project.projectCancelled)}
               </Typography>
             </Box>
-            </Paper>
+          </Paper>
         </Grid>
       </Grid>
    </div>

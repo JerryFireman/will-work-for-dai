@@ -9,8 +9,9 @@ const NavBar = (props) => {
     return (
         <div>
              <AppBar
-             position="static" 
-             color="primary" >
+                position="static" 
+                color="primary"
+             >
                 <Toolbar>
                     <Typography variant="h4" color="inherit" >
                         {props.project.name} 

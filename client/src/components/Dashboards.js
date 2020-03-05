@@ -26,15 +26,16 @@ export default function Dashboards(props) {
       <Grid container spacing={3} margin="50px">
         <Grid item xs={6}>
           <Paper className={classes.paper} square={true} elevation={0}>
-          <Box fontWeight="fontWeightBold" textAlign="left">    
+            <Box fontWeight="fontWeightBold" textAlign="left">    
               <Typography variant="h4" color="primary" >
-                  Client Dashboard
+                Client Dashboard
               </Typography><br/>
               <form className={classes.root} noValidate autoComplete="off">
                 <StyledButton onClick={props.approvePhaseStructure}>
                   Approve phase structure
-                </StyledButton><br/>
-              </form><br/>
+                </StyledButton>
+              </form>
+              <br/>
               <form className={classes.root} noValidate autoComplete="off">            
                 <TextField 
                   id="filled-basic" 
@@ -46,9 +47,10 @@ export default function Dashboards(props) {
                   onChange={props.handleChange} 
                 />
                 <StyledButton onClick={props.deposit}>Deposit</StyledButton>
-              </form><br/>
+              </form>
+              <br/>
               <form className={classes.root} noValidate autoComplete="off">
-                 <TextField 
+                <TextField 
                   id="filled-basic" 
                   label="Amount to withdraw" 
                   variant="filled" 
@@ -58,21 +60,22 @@ export default function Dashboards(props) {
                   onChange={props.handleChange}
                 />
                 <StyledButton onClick={props.clientWithdrawal}>Withdraw</StyledButton>
-              </form><br/>
+              </form>
+              <br/>
               <form className={classes.root} noValidate autoComplete="off">
-              <StyledButton onClick={props.approvePhase}>
+                <StyledButton onClick={props.approvePhase}>
                   Approve current phase
                 </StyledButton>
-                </form><br/>
+              </form><br/>
                 <StyledButton onClick={props.clientCancelProject}>
                   Cancel project
-              </StyledButton>
+                </StyledButton>
             </Box>
           </Paper>
         </Grid>
         <Grid item xs={6}>
           <Paper className={classes.paper} square={true} elevation={0}>
-          <Box fontWeight="fontWeightBold" textAlign="left">    
+            <Box fontWeight="fontWeightBold" textAlign="left">    
               <Typography variant="h4" color="primary">
                   Service Provider Dashboard
               </Typography><br/>
@@ -111,8 +114,8 @@ export default function Dashboards(props) {
                 <StyledButton onClick={props.definePhase}>
                   Create new phase
                 </StyledButton>
-                </form><br/>
-                <form className={classes.root} noValidate autoComplete="off">
+              </form><br/>
+              <form className={classes.root} noValidate autoComplete="off">
                 <TextField 
                   id="filled-basic" 
                   label="Amount to withdraw" 
@@ -126,17 +129,17 @@ export default function Dashboards(props) {
                   onClick={props.serviceProviderWithdrawal}>
                   Withdraw
                 </StyledButton>
-                </form><br/>
-                <form className={classes.root} noValidate autoComplete="off">
+              </form><br/>
+              <form className={classes.root} noValidate autoComplete="off">
                 <StyledButton onClick={props.startPhase}>
                   Start next phase
                 </StyledButton>
-                </form><br/>
-                <StyledButton onClick={props.serviceProviderCancelProject}>
-                  Cancel project
-                </StyledButton>
-                </Box>
-            </Paper>
+              </form><br/>
+              <StyledButton onClick={props.serviceProviderCancelProject}>
+                Cancel project
+              </StyledButton>
+            </Box>
+          </Paper>
         </Grid>
       </Grid>
     </div>

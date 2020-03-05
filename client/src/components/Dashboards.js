@@ -90,21 +90,21 @@ export default function Dashboards(props) {
                 <br/>
                 <TextField 
                   id="filled-basic" 
-                  label="Initial payment" 
+                  label="Locked payment" 
                   variant="filled" 
                   type="number" 
-                  name="initialPayment" 
-                  value={props.initialPayment} 
+                  name="lockedPayment" 
+                  value={props.lockedPayment} 
                   onChange={props.handleChange}
                 />
                 <br/>
                 <TextField 
                   id="filled-basic" 
-                  label="Final payment" 
+                  label="Discretionary payment" 
                   variant="filled" 
                   type="number" 
-                  name="finalPayment" 
-                  value={props.finalPayment} 
+                  name="discretionaryPayment" 
+                  value={props.discretionaryPayment} 
                   onChange={props.handleChange}
                 />
                 <br/>

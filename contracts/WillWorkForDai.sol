@@ -15,9 +15,9 @@ contract WillWorkForDai {
     struct Phase {
         string name;
         string description;
-        uint initialPayment; // this goes to service provider when client approves phase;
+        uint lockedPayment; // this goes to service provider when client approves phase;
             // it goes to service provider if client cancels or client if service provider cancels
-        uint finalPayment; // this goes to service provider when client approves phase; to client if service provider or client cancels
+        uint discretionaryPayment; // this goes to service provider when client approves phase; to client if service provider or client cancels
         bool phaseStarted; // service provider starts the phase; initial payment moves into escrow
         bool clientApproved; // set true when client approves phase
     }
@@ -118,9 +118,9 @@ contract WillWorkForDai {
     // @dev Used by service provider to define a phase of the project
     // @param _name name of the phase
     // @param _description description of the phase
-    // @param _initialPayment amount that service provider earns even if phase cancelled by client
-    // @param _finalPayment refunded to client if phase is cancelled
-    function createPhase(string memory _name, string memory _description, uint _initialPayment, uint _finalPayment)
+    // @param _lockedPayment amount that service provider earns even if phase cancelled by client
+    // @param _discretionaryPayment refunded to client if phase is cancelled
+    function createPhase(string memory _name, string memory _description, uint _lockedPayment, uint _discretionaryPayment)
         public
         onlyServiceProvider
         phaseStructureNotApproved
@@ -129,8 +129,8 @@ contract WillWorkForDai {
         Phase storage newPhase = thisProject.phases[idGenerator];
         newPhase.name = _name;
         newPhase.description = _description;
-        newPhase.initialPayment = _initialPayment;
-        newPhase.finalPayment = _finalPayment;
+        newPhase.lockedPayment = _lockedPayment;
+        newPhase.discretionaryPayment = _discretionaryPayment;
         idGenerator++;
         thisProject.phaseExists = true;
         return idGenerator - 1;
@@ -163,16 +163,16 @@ contract WillWorkForDai {
     function readPhase(uint _phase)
         public
         view
-        returns(string memory name, string memory description, uint initialPayment, uint finalPayment, bool phaseStarted, bool clientApproved)
+        returns(string memory name, string memory description, uint lockedPayment, uint discretionaryPayment, bool phaseStarted, bool clientApproved)
     {
         name = thisProject.phases[_phase].name;
         description = thisProject.phases[_phase].description;
-        initialPayment = thisProject.phases[_phase].initialPayment;
-        finalPayment = thisProject.phases[_phase].finalPayment;
+        lockedPayment = thisProject.phases[_phase].lockedPayment;
+        discretionaryPayment = thisProject.phases[_phase].discretionaryPayment;
         phaseStarted = thisProject.phases[_phase].phaseStarted;
         clientApproved = thisProject.phases[_phase].clientApproved;
 
-        return(name, description, initialPayment, finalPayment, phaseStarted, clientApproved);
+        return(name, description, lockedPayment, discretionaryPayment, phaseStarted, clientApproved);
     }
 
     // @dev Executed by service provider to start the next phase of the project
@@ -186,11 +186,11 @@ contract WillWorkForDai {
         require(thisProject.projectCompleted == false, "Project has already been completed");
         require(thisProject.projectCancelled == false, "Project has been cancelled");
         uint nextPhase = (thisProject.currentPhase + 1);
-        require(thisProject.clientBalance >= thisProject.phases[nextPhase].initialPayment + thisProject.phases[nextPhase].finalPayment,
+        require(thisProject.clientBalance >= thisProject.phases[nextPhase].lockedPayment + thisProject.phases[nextPhase].discretionaryPayment,
             "Client balance is not sufficient to begin this phase");
         thisProject.currentPhase = nextPhase;
-        thisProject.clientBalance -= thisProject.phases[nextPhase].initialPayment + thisProject.phases[nextPhase].finalPayment;
-        thisProject.escrowBalance += thisProject.phases[nextPhase].initialPayment + thisProject.phases[nextPhase].finalPayment;
+        thisProject.clientBalance -= thisProject.phases[nextPhase].lockedPayment + thisProject.phases[nextPhase].discretionaryPayment;
+        thisProject.escrowBalance += thisProject.phases[nextPhase].lockedPayment + thisProject.phases[nextPhase].discretionaryPayment;
         thisProject.phases[thisProject.currentPhase].phaseStarted = true;
         return thisProject.currentPhase;
     }
@@ -216,10 +216,10 @@ contract WillWorkForDai {
         require(thisProject.phases[thisProject.currentPhase].clientApproved == false,"Client has already approved current phase");
         require(thisProject.phases[thisProject.currentPhase].phaseStarted == true,"This phase has not been started so it cannot be approved");
         thisProject.phases[thisProject.currentPhase].clientApproved = true;
-        thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].initialPayment;
-        thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
-        thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].initialPayment;
-        thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].finalPayment;
+        thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].lockedPayment;
+        thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].discretionaryPayment;
+        thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].lockedPayment;
+        thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].discretionaryPayment;
         // @dev If the current phase is the last phase of the project then project is finished
         if (thisProject.currentPhase == (idGenerator - 1))
         {
@@ -236,17 +236,17 @@ contract WillWorkForDai {
         require(msg.sender == thisProject.client || msg.sender == serviceProvider, "Contract can only be cancelled by client or service provider");
         if (msg.sender == thisProject.client)
         {
-            thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].initialPayment;
-            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].initialPayment;
-            thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
-            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].finalPayment;
+            thisProject.serviceProviderBalance += thisProject.phases[thisProject.currentPhase].lockedPayment;
+            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].lockedPayment;
+            thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].discretionaryPayment;
+            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].discretionaryPayment;
         }
         if (msg.sender == serviceProvider)
         {
-            thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].initialPayment;
-            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].initialPayment;
-            thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].finalPayment;
-            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].finalPayment;
+            thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].lockedPayment;
+            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].lockedPayment;
+            thisProject.clientBalance += thisProject.phases[thisProject.currentPhase].discretionaryPayment;
+            thisProject.escrowBalance -= thisProject.phases[thisProject.currentPhase].discretionaryPayment;
         }
         thisProject.projectCancelled = true;
         return thisProject.projectCancelled;

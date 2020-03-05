@@ -41,8 +41,8 @@ export default function PhaseTable(props) {
               <TableCell component="th" scope="row">
                 {phase.name}
               </TableCell>
-              <TableCell align="right">{phase.initialPayment}</TableCell>
-              <TableCell align="right">{phase.finalPayment}</TableCell>
+              <TableCell align="right">{phase.lockedPayment}</TableCell>
+              <TableCell align="right">{phase.discretionaryPayment}</TableCell>
               <TableCell align="right">{String(phase.phaseStarted)}</TableCell>
               <TableCell align="right">{String(phase.clientApproved)}</TableCell>
             </TableRow>

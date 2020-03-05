@@ -68,7 +68,7 @@ contract('WillWorkForDai', function(accounts) {
         it("service provider should be able to create phase", async() => {
             await instance.createPhase("Definition", "Create flow chart of entire project", 5, 15, {from: serviceProvider})
             const phase = await instance.readPhase(1)
-            assert.equal(phase.initialPayment, 5, "the initial payment for the phase should be 5")
+            assert.equal(phase.lockedPayment, 5, "the initial payment for the phase should be 5")
         })
         // @dev service provider can define second phase
         it("service provider should be able to create another phase", async() => {

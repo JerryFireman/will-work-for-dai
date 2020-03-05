@@ -18,8 +18,6 @@ class App extends Component {
     this.approvePhaseStructure = this.approvePhaseStructure.bind(this)
     this.deposit = this.deposit.bind(this)
     this.clientWithdrawal = this.clientWithdrawal.bind(this)
-
-
   }
   
   state = { 
@@ -30,8 +28,8 @@ class App extends Component {
     storageValue: 0,
     phaseName: "",
     phaseDescription: "",
-    initialPayment: 0,
-    finalPayment: 0,
+    lockedPayment: 0,
+    discretionaryPayment: 0,
     phaseStructure: [],
     project: {},
     depositAmount: 0,
@@ -48,7 +46,6 @@ class App extends Component {
 
       // Use web3 to get the user's accounts.
       const accounts = await web3.eth.getAccounts();
-      console.log(accounts);
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
@@ -60,12 +57,11 @@ class App extends Component {
       // Set web3, accounts, and contract to the state.
       this.setState({ web3, accounts, contract: instance });
 
-         // @dev call getter function to obtain serviceProvider address
-        const serviceProvider = await instance.methods.serviceProvider().call();
-        console.log("serviceProvider:", serviceProvider)
-        this.setState({serviceProvider: serviceProvider})
+      // @dev call getter function to obtain serviceProvider address
+      const serviceProvider = await instance.methods.serviceProvider().call();
+      this.setState({serviceProvider: serviceProvider})
 
-      // Call readProject() to obtain project information and add to state
+      // @dev Call readProject() to obtain project information and add to state
       const project = await instance.methods.readProject().call();
       this.setState({project: project})
       var clientBalance = this.state.project.clientBalance;
@@ -74,11 +70,9 @@ class App extends Component {
       var escrowBalance = this.state.project.escrowBalance;
       escrowBalance = web3.utils.fromWei(escrowBalance, 'ether');
       escrowBalance = parseFloat(escrowBalance).toFixed(4);
-      console.log("escrowBalance before setState", escrowBalance);
       var serviceProviderBalance = this.state.project.serviceProviderBalance;
       serviceProviderBalance = web3.utils.fromWei(serviceProviderBalance, 'ether');
       serviceProviderBalance = parseFloat(serviceProviderBalance).toFixed(4);
-      console.log("serviceProviderBalance before setState", serviceProviderBalance);
       this.setState(prevState => {
         let project = Object.assign({}, prevState.project);
         project.clientBalance = clientBalance;
@@ -86,10 +80,6 @@ class App extends Component {
         project.serviceProviderBalance = serviceProviderBalance;
         return { project };
       })
-      console.log("clientBalance from state after setState", this.state.project.clientBalance)
-      console.log("escrow balance from state after setState",this.state.project.escrowBalance);
-      console.log("service provider balance from state after setState",this.state.project.serviceProviderBalance);
-      console.log("service provider",this.state.project.serviceProvider);
 
       await this.getPhaseStructure()
     } catch (error) {
@@ -105,121 +95,84 @@ class App extends Component {
   definePhase = async () => {
     console.log("hit definePhase")
     const { accounts, contract, web3 } = this.state;
-    var initialPayment = this.state.initialPayment;
-    initialPayment = String(initialPayment)
-    initialPayment = web3.utils.toWei(initialPayment,"ether")
-    initialPayment = String(initialPayment)
-    var finalPayment = this.state.finalPayment;
-    finalPayment = String(finalPayment)
-    finalPayment = web3.utils.toWei(finalPayment,"ether")
-    finalPayment = String(finalPayment)
-    await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, initialPayment, finalPayment).send({ from: accounts[0], gas: 3000000 });
-//    this.getPhaseStructure()
+    var lockedPayment = this.state.lockedPayment;
+    lockedPayment = String(lockedPayment)
+    lockedPayment = web3.utils.toWei(lockedPayment,"ether")
+    lockedPayment = String(lockedPayment)
+    var discretionaryPayment = this.state.discretionaryPayment;
+    discretionaryPayment = String(discretionaryPayment)
+    discretionaryPayment = web3.utils.toWei(discretionaryPayment,"ether")
+    discretionaryPayment = String(discretionaryPayment)
+    await contract.methods.createPhase(this.state.phaseName, this.state.phaseDescription, lockedPayment, discretionaryPayment).send({ from: accounts[0], gas: 3000000 });
     this.setState({
       phaseName: "",
       phaseDescription: "",
-      initialPayment: 0,
-      finalPayment: 0        
+      lockedPayment: 0,
+      discretionaryPayment: 0        
     })
   };
 
   //Executed by the client to deposit funds into contract                 
-      deposit = async () => {
-        console.log("1")
-        const { accounts, contract, web3 } = this.state;
-        // let balance = await web3.eth.getBalance(accounts[1])
-        // console.log("client balance", balance)
+    deposit = async () => {
+      const { accounts, contract, web3 } = this.state;
       try {
           await contract.methods.deposit().send({from: accounts[1], gas: 3000000, value: String(web3.utils.toWei(this.state.depositAmount,"ether"))});
           this.setState({
             depositAmount: 0
           });
-          // Call readProject() to obtain project information and add to state
-          const project = await contract.methods.readProject().call();
-          this.setState({project: project})
-          console.log("accounts 1 address", accounts[1])
-          let balance = await web3.eth.getBalance(accounts[1])
-          console.log("client wallet balance", balance)
-          let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
-          console.log("contract balance", conbalance)
-          console.log("client balance in contract", this.state.project.clientBalance)
 
-        } catch (error) {
-          // Catch any errors for any of the above operations.
-          alert(
+      } catch (error) {
+        alert(
           `Deposit into contract failed. Check console for details.`,
         );
         console.error(error);
-        }
+      }
+    }
+
+    // @dev Executed by client to withdraw funds from contract
+    clientWithdrawal = async () => {
+      const { accounts, contract, web3 } = this.state;
+      var clientWithdrawalAmount = this.state.clientWithdrawalAmount
+      clientWithdrawalAmount = String(clientWithdrawalAmount)
+      clientWithdrawalAmount = web3.utils.toWei(clientWithdrawalAmount,"ether")
+      clientWithdrawalAmount = String(clientWithdrawalAmount)
+      try {
+        await contract.methods.clientWithdrawal(clientWithdrawalAmount).send({ from: accounts[1], gas: 3000000 });
+        this.setState({
+          clientWithdrawalAmount: 0
+        });
+      } catch (error) {
+        alert(
+            `Attempt by client to withdraw funds returned error. Check console for details.`,
+        );
+        console.error(error);
       }
 
-      // @dev Executed by client to withdraw funds from contract
-      clientWithdrawal = async () => {
-        const { accounts, contract, web3 } = this.state;
-        console.log("hit client withdrawal!")
-        var clientWithdrawalAmount = this.state.clientWithdrawalAmount
-        clientWithdrawalAmount = String(clientWithdrawalAmount)
-        clientWithdrawalAmount = web3.utils.toWei(clientWithdrawalAmount,"ether")
-        clientWithdrawalAmount = String(clientWithdrawalAmount)
-        console.log("clientWithdrawalAmount", clientWithdrawalAmount)
-        try {
-          //await contract.methods.clientWithdrawal(String(this.state.clientWithdrawalAmount)).send({ from: accounts[1], gas: 3000000 });
-          await contract.methods.clientWithdrawal(clientWithdrawalAmount).send({ from: accounts[1], gas: 3000000 });
-          this.setState({
-            clientWithdrawalAmount: 0
-          });
-        } catch (error) {
-          // Catch any errors for any of the above operations.
-          alert(
-            `Attempt by client to withdraw funds returned error. Check console for details.`,
-          );
-          console.error(error);
-        }
+      // Call readProject() to obtain project information and add to state
+      const project = await contract.methods.readProject().call();
+      this.setState({project: project})
+    };
 
-          // Call readProject() to obtain project information and add to state
-          const project = await contract.methods.readProject().call();
-          this.setState({project: project})
-          let balance = await web3.eth.getBalance(accounts[1])
-          console.log("client wallet balance", balance)
-          let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
-          console.log("contract balance", conbalance)
-          console.log("client balance in contract", this.state.project.clientBalance)
-        
-      };
-
-      // @dev Executed by service provider to withdraw funds from contract
-      serviceProviderWithdrawal = async () => {
-        const { accounts, contract, web3 } = this.state;
-        console.log("hit service provider withdrawal!")
-        var serviceProviderWithdrawalAmount = this.state.serviceProviderWithdrawalAmount
-        serviceProviderWithdrawalAmount = String(serviceProviderWithdrawalAmount)
-        serviceProviderWithdrawalAmount = web3.utils.toWei(serviceProviderWithdrawalAmount,"ether")
-        serviceProviderWithdrawalAmount = String(serviceProviderWithdrawalAmount)
-        console.log("serviceProviderWithdrawalAmount", serviceProviderWithdrawalAmount)
-        try {
-          //await contract.methods.clientWithdrawal(String(this.state.serviceProviderWithdrawalAmount)).send({ from: accounts[1], gas: 3000000 });
-          await contract.methods.serviceProviderWithdrawal(serviceProviderWithdrawalAmount).send({ from: accounts[0], gas: 3000000 });
-          this.setState({
-            serviceProviderWithdrawalAmount: 0
-          });
-        } catch (error) {
-          // Catch any errors for any of the above operations.
-          alert(
-            `Attempt by service provider to withdraw funds returned error. Check console for details.`,
-          );
-          console.error(error);
-        }
-          // Call readProject() to obtain project information and add to state
-          const project = await contract.methods.readProject().call();
-          this.setState({project: project})
-          console.log("service provider: ",this.state.project.serviceProvider)
-          let balance = await web3.eth.getBalance(accounts[1])
-          console.log("client wallet balance", balance)
-          let conbalance = await web3.eth.getBalance("0x6F2b8204FDF7384926E1571f68571B5AC65714C0")
-          console.log("contract balance", conbalance)
-          console.log("client balance in contract", this.state.project.clientBalance)
-        
-      };
+    // @dev Executed by service provider to withdraw funds from contract
+    serviceProviderWithdrawal = async () => {
+      const { accounts, contract, web3 } = this.state;
+      var serviceProviderWithdrawalAmount = this.state.serviceProviderWithdrawalAmount
+      serviceProviderWithdrawalAmount = String(serviceProviderWithdrawalAmount)
+      serviceProviderWithdrawalAmount = web3.utils.toWei(serviceProviderWithdrawalAmount,"ether")
+      serviceProviderWithdrawalAmount = String(serviceProviderWithdrawalAmount)
+      try {
+        //await contract.methods.clientWithdrawal(String(this.state.serviceProviderWithdrawalAmount)).send({ from: accounts[1], gas: 3000000 });
+        await contract.methods.serviceProviderWithdrawal(serviceProviderWithdrawalAmount).send({ from: accounts[0], gas: 3000000 });
+        this.setState({
+          serviceProviderWithdrawalAmount: 0
+        });
+      } catch (error) {
+        alert(
+          `Attempt by service provider to withdraw funds returned error. Check console for details.`,
+        );
+        console.error(error);
+      }
+    };
 
   //Executed to retrieve the current phase structure 
   getPhaseStructure = async () => {
@@ -237,18 +190,15 @@ class App extends Component {
         delete phase[4];
         delete phase[5];
         phase.id = i
-        console.log("phase", phase)
-        var ip = phase.initialPayment
+        var ip = phase.lockedPayment
         ip = web3.utils.fromWei(ip, 'ether');
         ip = parseFloat(ip).toFixed(4);
-        console.log("ip",ip)
-        phase.initialPayment = ip
+        phase.lockedPayment = ip
         console.log("phase", phase)
-        var fp = phase.finalPayment
+        var fp = phase.discretionaryPayment
         fp = web3.utils.fromWei(fp, 'ether');
         fp = parseFloat(fp).toFixed(4);
-        console.log("fp",fp)
-        phase.finalPayment = fp
+        phase.discretionaryPayment = fp
         phaseArray.push(phase);
       }
       
@@ -260,13 +210,12 @@ class App extends Component {
    }
    
   // @dev Executed by client to approve phase structure
-   approvePhaseStructure = async () => {
+  approvePhaseStructure = async () => {
     const { accounts, contract } = this.state;
     try {
       const response = await contract.methods.approvePhaseStructure().send({ from: accounts[1], gas: 3000000 });
       if (response) {
         const project = await contract.methods.readProject().call();
-        console.log("project.phaseExists",project.phaseExists)
         this.setState({project: project})
       }
     } catch (error) {
@@ -284,7 +233,6 @@ class App extends Component {
     try {
       await contract.methods.approvePhase().send({ from: accounts[1], gas: 3000000 });
     } catch (error) {
-      // Catch any errors for the above operation.
       alert(
         `Attempt by client to approve current phase failed. Check console for details.`,
       );
@@ -333,6 +281,8 @@ class App extends Component {
       console.error(error);
     }
   };
+
+  // @dev Watch for user keystrokes and update state
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
@@ -360,8 +310,8 @@ class App extends Component {
           clientCancelProject={this.clientCancelProject}
           phaseName={this.state.phaseName} 
           phaseDescription={this.state.phaseDescription} 
-          initialPayment={this.state.initialPayment} 
-          finalPayment={this.state.finalPayment}
+          lockedPayment={this.state.lockedPayment} 
+          discretionaryPayment={this.state.discretionaryPayment}
           definePhase={this.definePhase} 
           serviceProviderWithdrawalAmount={this.state.serviceProviderWithdrawalAmount} 
           serviceProviderWithdrawal={this.serviceProviderWithdrawal} 

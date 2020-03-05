@@ -23,7 +23,7 @@ export default function Dashboards(props) {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={3} margin="50px">
+      <Grid container spacing={0} >
         <Grid item xs={6}>
           <Paper className={classes.paper} square={true} elevation={0}>
             <Box fontWeight="fontWeightBold" textAlign="left">    

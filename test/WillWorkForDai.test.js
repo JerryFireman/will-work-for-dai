@@ -1,9 +1,9 @@
-var ProjectAgreements = artifacts.require('ProjectAgreements')
+var WillWorkForDai = artifacts.require('WillWorkForDai')
 let catchRevert = require("./exceptionsHelpers.js").catchRevert
 const BN = web3.utils.BN
 
 
-contract('ProjectAgreements', function(accounts) {
+contract('WillWorkForDai', function(accounts) {
 
     const firstAccount = accounts[0]
     const secondAccount = accounts[1]
@@ -14,7 +14,7 @@ contract('ProjectAgreements', function(accounts) {
     let instance
 
     beforeEach(async () => {
-        instance = await ProjectAgreements.new(name, description, client, {from: serviceProvider})
+        instance = await WillWorkForDai.new(name, description, client, {from: serviceProvider})
     })
 
     describe("Setup", async() => {

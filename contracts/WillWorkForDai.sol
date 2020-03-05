@@ -1,9 +1,9 @@
 pragma solidity >=0.4.21 <0.7.0;
 
-// @title Project Agreements: Self-enforcing smart contracts avoid project work disputes
+// @title Will Work for Dai: Self-enforcing smart contracts avoid project work disputes
 // @author Jerry Fireman
 
-contract ProjectAgreements {
+contract WillWorkForDai {
 
     // @dev The person providing the service
     address payable public serviceProvider;

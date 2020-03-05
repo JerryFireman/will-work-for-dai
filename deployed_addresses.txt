@@ -1,3 +1,0 @@
-Contract address on Rinkeby testnet: 0xeDD5d4bd0859E3BA2501cfBcf35E3c32BAAC1F37
-Etherscan link:  https://rinkeby.etherscan.io/address/0xeDD5d4bd0859E3BA2501cfBcf35E3c32BAAC1F37
-

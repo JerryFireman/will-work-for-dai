@@ -1,5 +1,5 @@
-var ProjectAgreements = artifacts.require("./ProjectAgreements.sol");
+var WillWorkForDai = artifacts.require("./WillWorkForDai.sol");
 
 module.exports = function(deployer,network,accounts) {
-  deployer.deploy(ProjectAgreements,"Sample Project","This project is designed for testing.",accounts[1],{from: accounts[0]});
+  deployer.deploy(WillWorkForDai,"Sample Project","This project is designed for testing.",accounts[1],{from: accounts[0]});
 };

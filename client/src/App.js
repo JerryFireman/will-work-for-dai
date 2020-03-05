@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import ProjectAgreementsContract from "./contracts/ProjectAgreements.json";
+import WillWorkForDaiContract from "./contracts/WillWorkForDai.json";
 import getWeb3 from "./getWeb3";
 import Dashboards from './components/Dashboards.js';
-import Header from "./Header.js";
+import Header from "./components/Header.js";
 import NavBar from './components/NavBar.js';
 import PhaseTable from './components/PhaseTable.js';
 import ProjectOverview from "./components/ProjectOverview.js";
@@ -52,9 +52,9 @@ class App extends Component {
 
       // Get the contract instance.
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = ProjectAgreementsContract.networks[networkId];
+      const deployedNetwork = WillWorkForDaiContract.networks[networkId];
       const instance = new web3.eth.Contract(
-        ProjectAgreementsContract.abi,
+        WillWorkForDaiContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
       // Set web3, accounts, and contract to the state.
